@@ -409,6 +409,30 @@ La web incluye **Vercel Analytics** completamente configurado:
 -   ✅ **Core Web Vitals** via Speed Insights
 -   ✅ **Página de pruebas** para verificar funcionamiento
 
+### 🛠️ **Solución de Build Errors**
+
+Si encuentras errores como `"Ignoring local @import of css/styles.css as resource is missing"`:
+
+#### **Problema Resuelto:**
+
+-   ✅ **Build script personalizado**: `vercel-build.js`
+-   ✅ **Configuración optimizada**: `vercel.json` con `outputDirectory: "public"`
+-   ✅ **Ignorar archivos innecesarios**: `.vercelignore` actualizado
+-   ✅ **Verificación automática**: El build verifica todos los archivos críticos
+
+#### **Comando de Build:**
+
+```bash
+npm run build  # Ejecuta verificaciones y estadísticas del proyecto
+```
+
+#### **Archivos de Configuración:**
+
+-   `vercel.json`: Configuración de despliegue y headers
+-   `.vercelignore`: Archivos a ignorar en el despliegue
+-   `vercel-build.js`: Script personalizado de build
+-   `package.json`: Scripts de desarrollo y build
+
 ---
 
 _Desarrollado con ❤️ para el bienestar emocional y la transformación personal_

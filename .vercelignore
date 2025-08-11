@@ -10,9 +10,11 @@ yarn-error.log*
 *.swp
 *.swo
 
-# Documentation (optional - remove if you want docs in production)
+# Documentation
 DYNAMIC_CONTENT.md
 MODAL_CONTACT_UPDATE.md
+DEVELOPMENT_NOTES.md
+README.md
 
 # OS generated files
 .DS_Store
@@ -24,12 +26,10 @@ desktop.ini
 .gitignore
 
 # Local development
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
+*.local
 
-# Build artifacts (if any)
+# Build artifacts
 build/
 dist/
 out/
@@ -46,7 +46,7 @@ logs/
 tmp/
 temp/
 
-# Root files (using public/ structure)
+# Root development files (Vercel will use public/ directory)
 /index.html
 /css/
 /js/
@@ -55,3 +55,7 @@ temp/
 /manifest.json
 /robots.txt
 /sitemap.xml
+/test-analytics.html
+
+# Config files that aren't needed in production
+vercel-analytics-config.js
