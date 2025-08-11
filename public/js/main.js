@@ -281,67 +281,7 @@ function initializeDynamicYear() {
 
 function initializeNavigation() {
     const navbar = document.getElementById("navbar");
-    const navToggle = document.getElementById("nav-toggle");
-    const navMenu = document.getElementById("nav-menu");
     const navLinks = document.querySelectorAll(".nav-link");
-
-    // Detectar resoluciones específicas que necesitan menú móvil forzado
-    function checkSpecificResolutions() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        // Resolución específica 2992x1224 y similares (con margen de error)
-        const isSpecificResolution =
-            (width >= 2900 &&
-                width <= 3100 &&
-                height >= 1200 &&
-                height <= 1300) ||
-            (width >= 1200 &&
-                width <= 1300 &&
-                height >= 2900 &&
-                height <= 3100) ||
-            // Otras resoluciones problemáticas que requieren menú móvil
-            (width > 1200 && width < 3000 && height > 1200 && height < 1400);
-
-        if (isSpecificResolution) {
-            document.body.classList.add("force-mobile-menu");
-            console.log(
-                `🔧 Forced mobile menu for resolution: ${width}x${height}`
-            );
-        } else {
-            document.body.classList.remove("force-mobile-menu");
-        }
-    }
-
-    // Verificar al cargar y al redimensionar
-    checkSpecificResolutions();
-    window.addEventListener("resize", checkSpecificResolutions);
-
-    // Mobile menu toggle
-    if (navToggle && navMenu) {
-        navToggle.addEventListener("click", toggleMobileMenu);
-        navToggle.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleMobileMenu();
-            }
-        });
-    }
-
-    // Close mobile menu when clicking on links
-    navLinks.forEach((link) => {
-        link.addEventListener("click", closeMobileMenu);
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener("click", function (e) {
-        if (
-            !navbar.contains(e.target) &&
-            navMenu.classList.contains("active")
-        ) {
-            closeMobileMenu();
-        }
-    });
 
     // Navbar scroll effect
     let lastScrollY = window.scrollY;
@@ -349,27 +289,6 @@ function initializeNavigation() {
 
     // Active section highlighting
     window.addEventListener("scroll", debounce(updateActiveSection, 50));
-
-    function toggleMobileMenu() {
-        navMenu.classList.toggle("active");
-        navToggle.classList.toggle("active");
-        navToggle.setAttribute(
-            "aria-expanded",
-            navToggle.classList.contains("active") ? "true" : "false"
-        );
-
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = navMenu.classList.contains("active")
-            ? "hidden"
-            : "";
-    }
-
-    function closeMobileMenu() {
-        navMenu.classList.remove("active");
-        navToggle.classList.remove("active");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-    }
 
     function handleNavbarScroll() {
         const currentScrollY = window.scrollY;
