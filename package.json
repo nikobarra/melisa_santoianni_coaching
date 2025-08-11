@@ -7,9 +7,7 @@
         "dev": "live-server --port=3000 --open=index.html",
         "dev:safe": "python -m http.server 3000",
         "dev:node": "node -e \"require('http').createServer((req,res)=>{const fs=require('fs'),path=require('path');let filePath=req.url==='/'?'index.html':req.url.slice(1);try{const data=fs.readFileSync(filePath);res.writeHead(200);res.end(data)}catch{res.writeHead(404);res.end('Not Found')}}).listen(3000,()=>console.log('Server at http://localhost:3000'))\"",
-        "build": "node vercel-build.js",
-        "minify-css": "cleancss -o dist/styles.min.css css/styles.css",
-        "minify-js": "terser js/main.js -o dist/main.min.js --compress --mangle",
+        "build": "echo 'Static site - no build needed'",
         "start": "npm run dev"
     },
     "keywords": [
@@ -20,14 +18,7 @@
     ],
     "author": "Melisa Santoianni",
     "license": "MIT",
-    "devDependencies": {
-        "clean-css-cli": "^5.6.3",
-        "live-server": "^1.2.2",
-        "terser": "^5.26.0"
-    },
     "dependencies": {
-        "@vercel/analytics": "^1.5.0",
-        "aos": "^2.3.4",
-        "swiper": "^11.0.5"
+        "@vercel/analytics": "^1.5.0"
     }
 }

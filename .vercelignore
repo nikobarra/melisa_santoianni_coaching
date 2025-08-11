@@ -1,61 +1,54 @@
-# Dependencies
-node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# SOLO DESPLEGAR LA CARPETA PUBLIC
+# Ignorar TODO excepto la carpeta public
+
+# Root files
+/*.html
+/*.js
+/*.css
+/*.json
+/*.md
+/*.txt
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.svg
+/*.webp
+
+# Root directories
+/css
+/js
+/img
+/structure
+/dist
+/node_modules
+/.git
+/.vscode
+/.idea
 
 # Development files
-.vscode
-.idea
-*.swp
-*.swo
-
-# Documentation
+package.json
+package-lock.json
+.gitignore
+README.md
+vercel-build.js
+vercel-analytics-config.js
 DYNAMIC_CONTENT.md
 MODAL_CONTACT_UPDATE.md
 DEVELOPMENT_NOTES.md
-README.md
 
-# OS generated files
+# OS files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Git
-.git
-.gitignore
+# Logs and cache
+*.log
+.cache
+.parcel-cache
+tmp
+temp
 
-# Local development
+# Environment files
 .env*
 *.local
-
-# Build artifacts
-build/
-dist/
-out/
-
-# Logs
-*.log
-logs/
-
-# Cache
-.cache/
-.parcel-cache/
-
-# Temporary files
-tmp/
-temp/
-
-# Root development files (Vercel will use public/ directory)
-/index.html
-/css/
-/js/
-/img/
-/structure/
-/manifest.json
-/robots.txt
-/sitemap.xml
-/test-analytics.html
-
-# Config files that aren't needed in production
-vercel-analytics-config.js

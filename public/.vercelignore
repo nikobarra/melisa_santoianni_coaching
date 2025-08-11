@@ -1,0 +1,2 @@
+# Este archivo asegura que Vercel trate esto como un sitio estático puro
+# No procesar ni transformar archivos CSS/JS
