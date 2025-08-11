@@ -587,6 +587,14 @@ function createBackToTopButton() {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
             box-shadow: 0 4px 15px var(--shadow);
+            /* Asegurar que esté siempre dentro del viewport */
+            max-width: calc(100vw - 4rem);
+            max-height: calc(100vh - 4rem);
+            box-sizing: border-box;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .back-to-top.visible {
             opacity: 1;
@@ -607,6 +615,38 @@ function createBackToTopButton() {
                 right: 1rem;
                 width: 45px;
                 height: 45px;
+            }
+        }
+        /* Específico para resoluciones ultra-anchas como 2992x1224 */
+        @media (min-width: 1200px) and (max-width: 3100px) and (min-height: 1200px) and (max-height: 1400px) {
+            .back-to-top {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                max-width: calc(100vw - 4rem);
+                max-height: calc(100vh - 4rem);
+                z-index: 1001;
+                box-sizing: border-box;
+            }
+        }
+        /* Para pantallas extremadamente anchas */
+        @media (min-width: 2800px) {
+            .back-to-top {
+                right: calc(2rem + ((100vw - 2800px) / 2));
+                bottom: 2rem;
+                position: fixed;
+                z-index: 1001;
+            }
+        }
+        /* Fallback para cualquier resolución problemática */
+        @media (min-aspect-ratio: 2/1) {
+            .back-to-top {
+                right: min(2rem, 5vw);
+                bottom: min(2rem, 5vh);
+                position: fixed;
+                max-width: calc(100vw - min(4rem, 10vw));
+                max-height: calc(100vh - min(4rem, 10vh));
+                box-sizing: border-box;
             }
         }
     `;
