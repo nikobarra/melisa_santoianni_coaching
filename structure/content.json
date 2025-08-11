@@ -1,0 +1,167 @@
+{
+    "sections": [
+        {
+            "id": "hero",
+            "title": "Bienvenida y Propuesta de Valor",
+            "content": {
+                "heading": "Melisa Santoianni",
+                "subheading": "COACHING FLORAL",
+                "tagline": "Tu camino hacia el bienestar emocional y la plenitud",
+                "description": "Una metodología holística que fusiona el poder transformador del coaching ontológico con la sanación de las Flores de Bach. No, no es un perfume. Es un viaje hacia tu paz interior.",
+                "cta_button": {
+                    "text": "Descubre tu camino",
+                    "link": "#que-es"
+                }
+            }
+        },
+        {
+            "id": "historia-flores-bach",
+            "title": "La Historia de las Flores de Bach",
+            "content": {
+                "heading": "El Legado de Edward Bach",
+                "description": "El Dr. Edward Bach (1886-1936) fue un médico y bacteriólogo británico que, insatisfecho con la medicina convencional, se interesó por la conexión entre las dolencias físicas y el estado emocional de las personas. Su creencia fundamental era que la enfermedad física es la manifestación de un desequilibrio emocional.",
+                "discovery": "Bach dedicó cinco años a buscar en la naturaleza, descubriendo 38 flores capaces de corregir estados emocionales negativos. Su método de descubrimiento fue intuitivo, él mismo experimentaba estados negativos hasta que una flor le devolvía el equilibrio.",
+                "system_principles": "El sistema se compone de 38 flores, cada uno asociado a un estado emocional específico. Se cree que actúan a través de un mecanismo 'vibracional' o 'energético', sin contener principios activos químicos. Las esencias se preparan a partir de flores silvestres y se diluyen en brandy."
+            }
+        },
+        {
+            "id": "coaching-ontologico",
+            "title": "¿Qué es el Coaching Ontológico?",
+            "content": {
+                "heading": "Transforma tu Ser",
+                "description": "El coaching ontológico es una práctica que interpreta al ser humano como una entidad dinámica con la capacidad de trascender limitaciones autoimpuestas. No es lo mismo que la psicología, el coaching ontológico guía a las personas para que elijan libremente cómo pensar y actuar, sin tratar trastornos.",
+                "benefits": "Esta disciplina es fundamental para mejorar las relaciones interpersonales, aumentar la confianza en entornos profesionales y alcanzar metas personales. Su propósito es que los individuos definan quiénes desean ser, permitiéndoles diseñar su propio ideal de felicidad."
+            }
+        },
+        {
+            "id": "que-es",
+            "title": "Coaching Floral: La Fusión Holística",
+            "content": {
+                "introduction": "El Coaching Floral es la sinergia entre el coaching ontológico y las Flores de Bach. Esta integración permite abordar la transformación personal desde múltiples dimensiones.",
+                "synergy_description": "Mientras que el coaching ontológico trabaja en la reestructuración de creencias limitantes y la definición de objetivos, las Flores de Bach actúan reequilibrando el plano emocional y energético, abordando las causas profundas de los desequilibrios. Esta combinación ofrece una vía integral y holística para el bienestar, buscando una curación auténtica a través de un cambio en la orientación de vida y la paz interior.",
+                "benefits": "Esta metodología va más allá de la mera gestión de síntomas, buscando una sanación genuina que fomente un cambio profundo y sostenible en la vida del individuo."
+            }
+        },
+        {
+            "id": "flores-para-mascotas",
+            "title": "Flores de Bach para Mascotas",
+            "content": {
+                "introduction": "Al igual que los humanos, los animales experimentan emociones como el miedo, la ansiedad y el estrés. La terapia floral se ha adaptado para ayudar a nuestros compañeros peludos, presentándose como un complemento a la atención veterinaria.",
+                "key_behaviors": {
+                    "heading": "Comportamientos Comunes que se Pueden Abordar:",
+                    "list_items": [
+                        "Ansiedad y estrés por separación, viajes o cambios de entorno.",
+                        "Miedos y fobias a ruidos fuertes, personas o lugares.",
+                        "Agresividad, posesividad y celos.",
+                        "Traumas, duelos y problemas de adaptación."
+                    ]
+                },
+                "rescue_remedy": {
+                    "heading": "Remedio de Rescate para Crisis",
+                    "description": "Una de las fórmulas más conocidas es el Remedio de Rescate, que combina cinco esencias para situaciones de emergencia emocional, como visitas al veterinario o tormentas.",
+                    "components": [
+                        "Rock Rose (para el pánico extremo).",
+                        "Impatiens (para la irritabilidad y nerviosismo).",
+                        "Star of Bethlehem (para el shock y el trauma)."
+                    ]
+                },
+                "administration": {
+                    "heading": "Métodos de Administración",
+                    "description": "Las esencias se pueden administrar de varias formas, como directamente en la boca, diluidas en el agua o la comida, o incluso aplicadas tópicamente en las almohadillas de las patas.",
+                    "note_alcohol": "Es importante tener en cuenta que las esencias originales contienen una pequeña cantidad de alcohol. Para evitarlo, se pueden usar fórmulas con glicerina o diluirlas en agua."
+                },
+                "disclaimer": "Si bien muchos dueños reportan resultados positivos, es crucial recordar que la terapia floral es un complemento, no un sustituto del diagnóstico y tratamiento veterinario. La eficacia de las Flores de Bach no ha sido demostrada científicamente."
+            }
+        },
+        {
+            "id": "para-quien-es",
+            "title": "Esto es para ti si...",
+            "content": {
+                "introduction": "Te sientes estancado, agobiado o tienes dificultades para gestionar tus emociones. Buscas una solución profunda y sostenible que vaya más allá de lo superficial.",
+                "list_items": [
+                    "Buscas mayor autoconciencia y conexión con tu esencia.",
+                    "Quieres superar creencias que te limitan.",
+                    "Te sientes abrumado por la ansiedad, el estrés o la tristeza.",
+                    "Anhelas encontrar tu propósito y vivir una vida más plena."
+                ]
+            }
+        },
+        {
+            "id": "proceso",
+            "title": "El Proceso",
+            "content": {
+                "introduction": "Un viaje guiado de transformación personal. Te acompañaré paso a paso para que alcances tus metas.",
+                "steps": [
+                    {
+                        "heading": "Sesión de Descubrimiento Gratuita",
+                        "description": "Un primer encuentro sin compromiso para que me cuentes tus desafíos y exploremos juntos si el Coaching Floral es la solución para ti."
+                    },
+                    {
+                        "heading": "Sesiones de Coaching Ontológico",
+                        "description": "A través de conversaciones transformadoras, identificaremos y trabajaremos en tus creencias limitantes para que definas conscientemente tu futuro ideal."
+                    },
+                    {
+                        "heading": "Preparación de Esencias Florales",
+                        "description": "Seleccionaré las Flores de Bach adecuadas para tu estado emocional, creando un acompañamiento energético y sutil que potenciará tu proceso."
+                    },
+                    {
+                        "heading": "Resultados y Bienestar Sostenible",
+                        "description": "Al final del proceso, habrás logrado una mayor autoconfianza, claridad mental y paz interior duradera, transformando tu vida desde la raíz."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "testimonios",
+            "title": "Voces que inspiran",
+            "content": {
+                "introduction": "Historias de clientes reales que han experimentado la transformación con el Coaching Floral. Su experiencia demuestra resultados tangibles y construye una inmensa credibilidad para el nuevo emprendimiento.",
+                "testimonials": [
+                    {
+                        "quote": "Melisa me ayudó a encontrar la paz que tanto buscaba. Pasé de sentirme abrumada a tener una claridad mental increíble. ¡Recomendadísima!",
+                        "author": "Laura G."
+                    },
+                    {
+                        "quote": "Las Flores de Bach, combinadas con las sesiones de coaching, fueron la clave para superar mis miedos y creencias limitantes. Ahora me siento más segura y conectada conmigo misma.",
+                        "author": "Ana P."
+                    }
+                ]
+            }
+        },
+        {
+            "id": "contacto",
+            "title": "Comienza tu viaje",
+            "content": {
+                "heading": "¿Listo para transformar tu vida?",
+                "description": "Te invito a dar el primer paso hacia tu bienestar emocional. Hablemos sobre tus desafíos y cómo puedo ayudarte.",
+                "contact_info": {
+                    "email": "melisantoianni@gmail.com",
+                    "whatsapp": "+542266440618",
+                    "phone": "+542266440618"
+                },
+                "cta_button": {
+                    "text": "Reserva tu sesión de descubrimiento gratuita",
+                    "link": "https://wa.me/542266440618?text=Hola%20Melisa,%20me%20interesa%20conocer%20más%20sobre%20el%20Coaching%20Floral"
+                },
+                "social_media": [
+                    {
+                        "platform": "Instagram",
+                        "url": "URL_A_INSTAGRAM"
+                    },
+                    {
+                        "platform": "YouTube",
+                        "url": "URL_A_YOUTUBE"
+                    },
+                    {
+                        "platform": "Email",
+                        "url": "mailto:melisantoianni@gmail.com"
+                    },
+                    {
+                        "platform": "WhatsApp",
+                        "url": "https://wa.me/542266440618"
+                    }
+                ]
+            }
+        }
+    ]
+}

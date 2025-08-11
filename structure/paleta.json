@@ -1,0 +1,20 @@
+{
+    "colors": {
+        "primary": "#F7F2EB",
+        "secondary": "#EAE0D6",
+        "tertiary": "#C9B29F",
+        "accent": "#F6C8C7",
+        "text_dark": "#3C3A3B",
+        "text_light": "#7E7B7A"
+    },
+    "typography": {
+        "heading_font": "Playfair Display, serif",
+        "body_font": "Lato, sans-serif",
+        "name_font": "Dancing Script, cursive"
+    },
+    "visual_style": {
+        "background_texture": "Sutil textura de papel o lino",
+        "floral_elements": "Ilustraciones de flores en contornos delicados y tonos pálidos, como en el logo",
+        "iconography": "Íconos minimalistas y de línea fina que representen conceptos como bienestar, equilibrio, y crecimiento personal"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "name": "coaching-floral-web",
+    "version": "1.0.0",
+    "description": "Web one-page para Coaching Floral de Melisa Santoianni",
+    "main": "index.html",
+    "scripts": {
+        "dev": "live-server --port=3000 --open=index.html",
+        "build": "npm run minify-css && npm run minify-js",
+        "minify-css": "cleancss -o dist/styles.min.css css/styles.css",
+        "minify-js": "uglifyjs js/main.js -o dist/main.min.js",
+        "start": "npm run dev"
+    },
+    "keywords": [
+        "coaching",
+        "flores-bach",
+        "bienestar",
+        "transformacion-personal"
+    ],
+    "author": "Melisa Santoianni",
+    "license": "MIT",
+    "devDependencies": {
+        "live-server": "^1.2.2",
+        "clean-css-cli": "^5.6.2",
+        "uglify-js": "^3.17.4"
+    },
+    "dependencies": {
+        "aos": "^2.3.4",
+        "swiper": "^11.0.5"
+    }
+}
