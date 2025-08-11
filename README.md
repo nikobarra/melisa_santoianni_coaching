@@ -251,9 +251,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 **Melisa Santoianni** - Coaching Floral
 
--   Email: melisa@coachingfloral.com
--   Instagram: [@melisasantoianni_coaching](https://instagram.com/melisasantoianni_coaching)
--   YouTube: [@melisasantoianni](https://youtube.com/@melisasantoianni)
+-   Email: melisantoianni@gmail.com
 
 ---
 
