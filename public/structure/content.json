@@ -176,7 +176,7 @@
                     "phone": "+542266440618"
                 },
                 "cta_button": {
-                    "text": "Reserva tu sesión de descubrimiento gratuita",
+                    "text": "Reserva tu sesión gratuita",
                     "link": "https://wa.me/542266440618?text=Hola%20Melisa,%20me%20interesa%20conocer%20más%20sobre%20el%20Coaching%20Floral"
                 },
                 "social_media": [
@@ -188,10 +188,7 @@
                         "platform": "YouTube",
                         "url": "URL_A_YOUTUBE"
                     },
-                    {
-                        "platform": "Email",
-                        "url": "mailto:melisantoianni@gmail.com"
-                    },
+
                     {
                         "platform": "WhatsApp",
                         "url": "https://wa.me/542266440618"
