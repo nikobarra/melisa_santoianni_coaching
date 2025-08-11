@@ -1,18 +1,7 @@
 {
-    "version": 2,
     "name": "coaching-floral-web",
-    "builds": [
-        {
-            "src": "index.html",
-            "use": "@vercel/static"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
-        }
-    ],
+    "version": 2,
+    "public": true,
     "headers": [
         {
             "source": "/(.*)",
@@ -66,13 +55,6 @@
                     "value": "public, max-age=3600"
                 }
             ]
-        }
-    ],
-    "functions": {},
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
         }
     ]
 }

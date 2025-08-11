@@ -45,3 +45,13 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+# Root files (using public/ structure)
+/index.html
+/css/
+/js/
+/img/
+/structure/
+/manifest.json
+/robots.txt
+/sitemap.xml
