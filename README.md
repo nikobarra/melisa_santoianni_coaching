@@ -385,6 +385,29 @@ La web incluye **Vercel Analytics** completamente configurado:
 1. **Dashboard de Vercel**: [Analytics Panel](https://vercel.com/nicolas-barras-projects/melisa-santoianni-coaching/analytics)
 2. **Métricas en Tiempo Real**: Disponibles 24/7
 3. **Reportes Automáticos**: Semanales y mensuales
+4. **Página de Pruebas**: `/test-analytics.html` (solo en producción)
+
+#### **Implementación Técnica:**
+
+```html
+<!-- Script oficial de Vercel Analytics -->
+<script>
+    window.va =
+        window.va ||
+        function () {
+            (window.vaq = window.vaq || []).push(arguments);
+        };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+```
+
+#### **Tracking Personalizado:**
+
+-   ✅ **Eventos automáticos** via script oficial de Vercel
+-   ✅ **Eventos personalizados** via `js/vercel-analytics.js`
+-   ✅ **Core Web Vitals** via Speed Insights
+-   ✅ **Página de pruebas** para verificar funcionamiento
 
 ---
 

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test Vercel Analytics - Coaching Floral</title>
+
+        <!-- Vercel Analytics -->
+        <script>
+            window.va =
+                window.va ||
+                function () {
+                    (window.vaq = window.vaq || []).push(arguments);
+                };
+        </script>
+        <script defer src="/_vercel/insights/script.js"></script>
+
+        <!-- Vercel Speed Insights -->
+        <script defer src="/_vercel/speed-insights/script.js"></script>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #f5f5f5;
+            }
+            .test-container {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            .test-button {
+                background: #4caf50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 10px;
+                font-size: 16px;
+            }
+            .test-button:hover {
+                background: #45a049;
+            }
+            .status {
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+            }
+            .success {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            .info {
+                background: #d1ecf1;
+                color: #0c5460;
+                border: 1px solid #bee5eb;
+            }
+            .warning {
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeaa7;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test-container">
+            <h1>🧪 Test Vercel Analytics</h1>
+            <p>
+                Esta página permite probar si Vercel Analytics está funcionando
+                correctamente.
+            </p>
+
+            <div id="analytics-status" class="status info">
+                ⏳ Verificando estado de Vercel Analytics...
+            </div>
+
+            <h2>Botones de Prueba</h2>
+            <button class="test-button" onclick="testPageView()">
+                📊 Test Page View
+            </button>
+            <button class="test-button" onclick="testCustomEvent()">
+                🎯 Test Custom Event
+            </button>
+            <button class="test-button" onclick="testWhatsAppClick()">
+                📱 Test WhatsApp Click
+            </button>
+            <button class="test-button" onclick="testEmailClick()">
+                📧 Test Email Click
+            </button>
+
+            <h2>Información del Sistema</h2>
+            <div id="system-info">
+                <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+                <p>
+                    <strong>User Agent:</strong> <span id="user-agent"></span>
+                </p>
+                <p><strong>Timestamp:</strong> <span id="timestamp"></span></p>
+            </div>
+
+            <h2>Log de Eventos</h2>
+            <div
+                id="event-log"
+                style="
+                    background: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 4px;
+                    font-family: monospace;
+                    height: 200px;
+                    overflow-y: auto;
+                "
+            ></div>
+        </div>
+
+        <script>
+            // Variables globales
+            let eventCounter = 0;
+            const eventLog = document.getElementById("event-log");
+
+            // Función para agregar logs
+            function addLog(message, type = "info") {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement("div");
+                logEntry.innerHTML = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+                logEntry.style.color =
+                    type === "error"
+                        ? "red"
+                        : type === "success"
+                        ? "green"
+                        : "black";
+                eventLog.appendChild(logEntry);
+                eventLog.scrollTop = eventLog.scrollHeight;
+            }
+
+            // Verificar estado de Analytics
+            function checkAnalyticsStatus() {
+                const statusEl = document.getElementById("analytics-status");
+
+                if (typeof window.va === "function") {
+                    statusEl.className = "status success";
+                    statusEl.innerHTML =
+                        "✅ Vercel Analytics está funcionando correctamente";
+                    addLog(
+                        "Vercel Analytics detectado y funcionando",
+                        "success"
+                    );
+                } else if (window.vaq && Array.isArray(window.vaq)) {
+                    statusEl.className = "status warning";
+                    statusEl.innerHTML =
+                        "⚠️ Vercel Analytics en cola (esperando carga completa)";
+                    addLog(
+                        "Cola de Analytics detectada, esperando inicialización",
+                        "warning"
+                    );
+                } else {
+                    statusEl.className = "status warning";
+                    statusEl.innerHTML = "❌ Vercel Analytics no detectado";
+                    addLog("Vercel Analytics no detectado", "error");
+                }
+            }
+
+            // Funciones de test
+            function testPageView() {
+                eventCounter++;
+                if (typeof window.va === "function") {
+                    window.va("track", "Test_Page_View", {
+                        test_number: eventCounter,
+                        timestamp: new Date().toISOString(),
+                        page: "test-analytics",
+                    });
+                    addLog(
+                        `Page View test #${eventCounter} enviado`,
+                        "success"
+                    );
+                } else {
+                    addLog("Error: Vercel Analytics no disponible", "error");
+                }
+            }
+
+            function testCustomEvent() {
+                eventCounter++;
+                if (typeof window.va === "function") {
+                    window.va("track", "Test_Custom_Event", {
+                        test_number: eventCounter,
+                        event_type: "custom_button_click",
+                        timestamp: new Date().toISOString(),
+                        user_agent: navigator.userAgent.substring(0, 50),
+                    });
+                    addLog(
+                        `Custom Event test #${eventCounter} enviado`,
+                        "success"
+                    );
+                } else {
+                    addLog("Error: Vercel Analytics no disponible", "error");
+                }
+            }
+
+            function testWhatsAppClick() {
+                eventCounter++;
+                if (typeof window.va === "function") {
+                    window.va("track", "Test_WhatsApp_Click", {
+                        test_number: eventCounter,
+                        phone: "+542266440618",
+                        source: "test_page",
+                        timestamp: new Date().toISOString(),
+                    });
+                    addLog(
+                        `WhatsApp Click test #${eventCounter} enviado`,
+                        "success"
+                    );
+                } else {
+                    addLog("Error: Vercel Analytics no disponible", "error");
+                }
+            }
+
+            function testEmailClick() {
+                eventCounter++;
+                if (typeof window.va === "function") {
+                    window.va("track", "Test_Email_Click", {
+                        test_number: eventCounter,
+                        email: "melisantoianni@gmail.com",
+                        source: "test_page",
+                        timestamp: new Date().toISOString(),
+                    });
+                    addLog(
+                        `Email Click test #${eventCounter} enviado`,
+                        "success"
+                    );
+                } else {
+                    addLog("Error: Vercel Analytics no disponible", "error");
+                }
+            }
+
+            // Inicialización
+            document.addEventListener("DOMContentLoaded", function () {
+                // Mostrar información del sistema
+                document.getElementById("hostname").textContent =
+                    window.location.hostname;
+                document.getElementById("user-agent").textContent =
+                    navigator.userAgent;
+                document.getElementById("timestamp").textContent =
+                    new Date().toISOString();
+
+                // Verificar estado inicial
+                addLog("Página de test cargada", "info");
+                checkAnalyticsStatus();
+
+                // Verificar periódicamente el estado
+                setInterval(checkAnalyticsStatus, 2000);
+
+                // Log automático cada 30 segundos
+                setInterval(() => {
+                    addLog("Sistema funcionando correctamente", "info");
+                }, 30000);
+            });
+
+            // Capturar errores
+            window.addEventListener("error", (e) => {
+                addLog(`Error JavaScript: ${e.message}`, "error");
+            });
+
+            addLog("Script de test inicializado", "info");
+        </script>
+    </body>
+</html>

@@ -8,47 +8,24 @@
     "use strict";
 
     /**
-     * Cargar Vercel Analytics de forma dinámica
+     * Verificar si Vercel Analytics está disponible
      */
-    function loadVercelAnalytics() {
-        // Script para Analytics básico
-        const analyticsScript = document.createElement("script");
-        analyticsScript.src = "https://va.vercel-scripts.com/v1/script.js";
-        analyticsScript.defer = true;
-        analyticsScript.setAttribute("data-website-id", "auto");
-
-        // Script para Speed Insights
-        const speedScript = document.createElement("script");
-        speedScript.src =
-            "https://va.vercel-scripts.com/v1/speed-insights/script.js";
-        speedScript.defer = true;
-
-        // Agregar al head
-        document.head.appendChild(analyticsScript);
-        document.head.appendChild(speedScript);
-
-        console.log("📊 Vercel Analytics scripts loaded");
+    function isAnalyticsReady() {
+        return typeof window.va === "function";
     }
 
     /**
      * Función para tracking de eventos personalizados
      */
     function trackEvent(eventName, properties = {}) {
-        // Esperar a que Vercel Analytics esté disponible
-        if (typeof window.va === "function") {
+        // Usar la función va de Vercel (definida en el script oficial)
+        if (isAnalyticsReady()) {
             window.va("track", eventName, properties);
             console.log(`📈 Event tracked: ${eventName}`, properties);
         } else {
-            // Intentar de nuevo después de un delay
-            setTimeout(() => {
-                if (typeof window.va === "function") {
-                    window.va("track", eventName, properties);
-                    console.log(
-                        `📈 Event tracked (delayed): ${eventName}`,
-                        properties
-                    );
-                }
-            }, 1000);
+            // Si no está listo, usar la cola vaq
+            window.va("track", eventName, properties);
+            console.log(`📈 Event queued: ${eventName}`, properties);
         }
     }
 
@@ -212,7 +189,8 @@
                 window.location.hostname !== "127.0.0.1");
 
         if (isProduction) {
-            loadVercelAnalytics();
+            // El script oficial de Vercel ya está cargado en el HTML
+            // Solo configuramos el tracking personalizado
 
             // Configurar tracking después de que se cargue el DOM
             if (document.readyState === "loading") {
@@ -220,16 +198,16 @@
                     setTimeout(() => {
                         setupCoachingTracking();
                         setupPerformanceTracking();
-                    }, 1500); // Esperar a que todo se inicialice
+                    }, 2000); // Esperar a que Vercel Analytics se inicialice
                 });
             } else {
                 setTimeout(() => {
                     setupCoachingTracking();
                     setupPerformanceTracking();
-                }, 1500);
+                }, 2000);
             }
 
-            console.log("✅ Vercel Analytics initialized for production");
+            console.log("✅ Vercel Analytics custom tracking initialized");
         } else {
             console.log("🔧 Analytics disabled in development mode");
         }
