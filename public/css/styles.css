@@ -927,20 +927,9 @@ p {
     position: relative;
 }
 
+/* Línea vertical del timeline removida para mejorar fluidez */
 .process-timeline::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(
-        180deg,
-        var(--accent-color),
-        var(--tertiary-color)
-    );
-    transform: translateX(-50%);
-    z-index: 1;
+    display: none;
 }
 
 .timeline-item {
@@ -1393,7 +1382,6 @@ p {
     );
     padding: 1.5rem;
     border-radius: var(--border-radius);
-    border-left: 4px solid var(--accent-color);
     margin-top: 2rem;
 }
 
@@ -1481,9 +1469,7 @@ p {
         text-align: center;
     }
 
-    .process-timeline::before {
-        display: none;
-    }
+    /* Línea del timeline ya removida globalmente */
 
     .timeline-number {
         position: static;
@@ -2015,22 +2001,10 @@ button:focus {
     position: relative;
 }
 
+/* Líneas decorativas del tagline removidas para mejorar fluidez */
 .tagline-text::before,
 .tagline-text::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 40px;
-    height: 1px;
-    background: var(--accent-color);
-}
-
-.tagline-text::before {
-    left: -60px;
-}
-
-.tagline-text::after {
-    right: -60px;
+    display: none;
 }
 
 /* Flower petals animation */
@@ -2272,11 +2246,7 @@ button:focus {
         padding: 0 1rem;
     }
 
-    .tagline-text::before,
-    .tagline-text::after {
-        width: 15px;
-        display: none; /* Ocultar líneas en móviles para mejor centrado */
-    }
+    /* Líneas decorativas ya removidas globalmente */
 
     .preloader-animation {
         width: 120px;
