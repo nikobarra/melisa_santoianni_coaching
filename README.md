@@ -357,6 +357,34 @@ La web está **100% lista para desplegar en Vercel** desde GitHub:
 -   🎨 **UX**: Preloader elegante, animaciones suaves
 -   ♿ **Accessibility**: WCAG compliant, keyboard navigation
 -   🔍 **SEO**: Meta tags, structured data, sitemap
+-   📊 **Analytics**: Vercel Analytics integrado con tracking personalizado
+
+### 📊 Analytics Web Integrado
+
+La web incluye **Vercel Analytics** completamente configurado:
+
+#### **Métricas Automáticas:**
+
+-   ✅ **Page Views**: Vistas de página
+-   ✅ **Core Web Vitals**: LCP, FID, CLS, FCP, TTFB
+-   ✅ **Performance**: Tiempos de carga y rendimiento
+-   ✅ **Geographic Data**: Ubicación de visitantes
+
+#### **Eventos Personalizados Tracked:**
+
+-   📞 **Clicks en WhatsApp**: `+542266440618`
+-   📧 **Clicks en Email**: `melisantoianni@gmail.com`
+-   🎯 **Botones CTA**: "Reserva tu sesión", etc.
+-   📱 **Modal de Contacto**: Apertura y uso
+-   🧭 **Navegación**: Clicks entre secciones
+-   ⏱️ **Tiempo en Secciones**: Engagement por área
+-   🚀 **Performance del Preloader**: Tiempo de carga
+
+#### **Acceso a Analytics:**
+
+1. **Dashboard de Vercel**: [Analytics Panel](https://vercel.com/nicolas-barras-projects/melisa-santoianni-coaching/analytics)
+2. **Métricas en Tiempo Real**: Disponibles 24/7
+3. **Reportes Automáticos**: Semanales y mensuales
 
 ---
 
