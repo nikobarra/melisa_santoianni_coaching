@@ -278,6 +278,72 @@ Para mantener el sitio actualizado:
 4. Monitorear performance
 5. Revisar analytics y ajustar SEO
 
+## 🚀 Despliegue en Producción
+
+### Despliegue en Vercel (Recomendado)
+
+La web está **100% lista para desplegar en Vercel** desde GitHub:
+
+1. **Preparar el repositorio**:
+
+    ```bash
+    git add .
+    git commit -m "Ready for Vercel deployment"
+    git push origin main
+    ```
+
+2. **Conectar con Vercel**:
+
+    - Ir a [vercel.com](https://vercel.com) y conectar GitHub
+    - Importar este repositorio
+    - Vercel detectará automáticamente la configuración
+
+3. **Configuración automática**:
+
+    - ✅ **Framework Preset**: Other (Sitio estático)
+    - ✅ **Build Command**: Ninguno requerido
+    - ✅ **Output Directory**: `./` (raíz del proyecto)
+    - ✅ **Install Command**: `npm install`
+
+4. **Características incluidas**:
+    - ✅ Headers de seguridad optimizados
+    - ✅ Cache inteligente para assets estáticos
+    - ✅ Compresión automática (Gzip/Brotli)
+    - ✅ CDN global para máxima velocidad
+    - ✅ HTTPS automático
+    - ✅ Actualizaciones automáticas con git push
+
+### Otros Proveedores de Hosting
+
+**Netlify**:
+
+```bash
+# Conectar repositorio de GitHub en netlify.com
+# O arrastrar la carpeta del proyecto
+```
+
+**GitHub Pages**:
+
+```bash
+# Settings > Pages > Deploy from branch: main
+```
+
+**Hosting Tradicional (cPanel, FTP)**:
+
+```bash
+# Subir todos los archivos al directorio público
+# Asegurar que index.html esté en la raíz
+```
+
+### Optimizaciones Incluidas
+
+-   📱 **Responsive Design**: Funciona en todos los dispositivos
+-   ⚡ **Performance**: Preloading, lazy loading, optimizaciones
+-   🔒 **Security**: Headers de seguridad, sanitización
+-   🎨 **UX**: Preloader elegante, animaciones suaves
+-   ♿ **Accessibility**: WCAG compliant, keyboard navigation
+-   🔍 **SEO**: Meta tags, structured data, sitemap
+
 ---
 
 _Desarrollado con ❤️ para el bienestar emocional y la transformación personal_

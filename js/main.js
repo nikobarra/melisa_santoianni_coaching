@@ -138,10 +138,12 @@ function initializePreloader() {
     });
 
     // Optional: Click to skip (for development/testing)
-    if (
+    const isDevelopment =
         window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
-    ) {
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname.includes("vercel.app");
+
+    if (isDevelopment) {
         preloader.addEventListener("click", () => {
             console.log("🔧 Development mode: Preloader skipped by click");
             hidePreloader();
