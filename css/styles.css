@@ -112,6 +112,13 @@ body::before {
 }
 
 /* Hide main content during preloader */
+body:not(.preloader-finished) {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 body:not(.preloader-finished) .navbar,
 body:not(.preloader-finished) .hero,
 body:not(.preloader-finished) .content-section {
@@ -120,6 +127,11 @@ body:not(.preloader-finished) .content-section {
 }
 
 /* Show main content after preloader */
+.preloader-finished {
+    overflow: auto;
+    position: static;
+}
+
 .preloader-finished .navbar,
 .preloader-finished .hero,
 .preloader-finished .content-section {
@@ -1680,8 +1692,10 @@ button:focus,
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     background: linear-gradient(
         135deg,
         var(--primary-color) 0%,
@@ -1694,6 +1708,8 @@ button:focus,
     opacity: 1;
     visibility: visible;
     transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .preloader.fade-out {
@@ -1703,9 +1719,15 @@ button:focus,
 
 .preloader-content {
     text-align: center;
-    max-width: 600px;
-    padding: 2rem;
+    max-width: 90vw;
+    width: 100%;
+    padding: 1rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 .preloader-logo {
@@ -1966,34 +1988,111 @@ button:focus,
 
 /* Responsive preloader */
 @media (max-width: 768px) {
+    .preloader {
+        /* Asegurar cobertura completa en móviles */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        min-width: 100vw;
+    }
+
+    .preloader-content {
+        max-width: 95vw;
+        padding: 1rem 0.5rem;
+        margin: 0 auto;
+    }
+
     .preloader-name {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        word-break: break-word;
     }
 
     .preloader-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+    }
+
+    .preloader-text {
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+
+    .preloader-tagline {
+        width: 100%;
+        position: relative;
+    }
+
+    .tagline-text {
+        font-size: 1rem;
+        position: relative;
+        display: inline-block;
+        padding: 0 1rem;
     }
 
     .tagline-text::before,
     .tagline-text::after {
-        width: 20px;
-    }
-
-    .tagline-text::before {
-        left: -35px;
-    }
-
-    .tagline-text::after {
-        right: -35px;
+        width: 15px;
+        display: none; /* Ocultar líneas en móviles para mejor centrado */
     }
 
     .preloader-animation {
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .preloader-logo {
+        margin-bottom: 1.5rem;
     }
 
     .preloader-logo-img {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .preloader-progress {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .progress-bar {
+        width: 150px;
+        margin: 0 auto 0.5rem;
+    }
+}
+
+/* Estilos adicionales para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .preloader-name {
+        font-size: 1.8rem;
+    }
+
+    .preloader-subtitle {
+        font-size: 1rem;
+    }
+
+    .tagline-text {
+        font-size: 0.9rem;
+    }
+
+    .preloader-animation {
+        width: 100px;
+        height: 100px;
+    }
+
+    .preloader-logo-img {
+        width: 45px;
+        height: 45px;
     }
 }

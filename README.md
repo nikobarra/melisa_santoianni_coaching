@@ -54,7 +54,21 @@ npm install
 npm run dev
 
 # El sitio estará disponible en http://localhost:3000
+
+# Alternativas sin warnings (opcional):
+npm run dev:node    # Servidor Node.js puro
+npm run dev:safe    # Servidor Python (requiere Python)
 ```
+
+### ⚠️ Sobre los Warnings de NPM
+
+Es normal ver warnings al ejecutar `npm install`. Estos provienen de dependencias obsoletas de `live-server` y **NO afectan**:
+
+-   ✅ El funcionamiento de la web
+-   ✅ La seguridad en producción
+-   ✅ El despliegue en Vercel
+
+Los warnings solo afectan el desarrollo local. En producción (Vercel) no existen porque no se instalan las devDependencies.
 
 ### Producción
 
