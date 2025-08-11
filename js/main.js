@@ -285,6 +285,38 @@ function initializeNavigation() {
     const navMenu = document.getElementById("nav-menu");
     const navLinks = document.querySelectorAll(".nav-link");
 
+    // Detectar resoluciones específicas que necesitan menú móvil forzado
+    function checkSpecificResolutions() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Resolución específica 2992x1224 y similares (con margen de error)
+        const isSpecificResolution =
+            (width >= 2900 &&
+                width <= 3100 &&
+                height >= 1200 &&
+                height <= 1300) ||
+            (width >= 1200 &&
+                width <= 1300 &&
+                height >= 2900 &&
+                height <= 3100) ||
+            // Otras resoluciones problemáticas que requieren menú móvil
+            (width > 1200 && width < 3000 && height > 1200 && height < 1400);
+
+        if (isSpecificResolution) {
+            document.body.classList.add("force-mobile-menu");
+            console.log(
+                `🔧 Forced mobile menu for resolution: ${width}x${height}`
+            );
+        } else {
+            document.body.classList.remove("force-mobile-menu");
+        }
+    }
+
+    // Verificar al cargar y al redimensionar
+    checkSpecificResolutions();
+    window.addEventListener("resize", checkSpecificResolutions);
+
     // Mobile menu toggle
     if (navToggle && navMenu) {
         navToggle.addEventListener("click", toggleMobileMenu);
