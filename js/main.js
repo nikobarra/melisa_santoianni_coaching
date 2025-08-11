@@ -9,6 +9,9 @@
 // ===============================================
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Initialize preloader first
+    initializePreloader();
+
     // Initialize background system
     initializeBackground();
 
@@ -50,69 +53,184 @@ document.addEventListener("DOMContentLoaded", function () {
 // ===============================================
 
 /**
+ * Initialize preloader with elegant animations
+ */
+function initializePreloader() {
+    const preloader = document.getElementById("preloader");
+    if (!preloader) return;
+
+    // Preload critical resources for smoother experience
+    const criticalResources = [
+        "img/logo.png",
+        "img/background.png",
+        "css/styles.css",
+    ];
+
+    let loadedResources = 0;
+    const totalResources = criticalResources.length;
+
+    // Function to update progress
+    function updateProgress() {
+        loadedResources++;
+        const progress = (loadedResources / totalResources) * 100;
+
+        // Update progress bar if needed
+        const progressBar = preloader.querySelector(".progress-bar::before");
+
+        // Check if all resources are loaded
+        if (loadedResources >= totalResources) {
+            // Wait for animations to complete, then hide preloader
+            setTimeout(() => {
+                hidePreloader();
+            }, 3000); // 3 seconds total duration
+        }
+    }
+
+    // Preload resources
+    criticalResources.forEach((resource) => {
+        if (resource.endsWith(".png") || resource.endsWith(".jpg")) {
+            const img = new Image();
+            img.onload = updateProgress;
+            img.onerror = updateProgress; // Count errors as loaded to prevent hanging
+            img.src = resource;
+        } else {
+            // For CSS and other resources, just simulate loading
+            setTimeout(updateProgress, 500);
+        }
+    });
+
+    // Hide preloader function
+    function hidePreloader() {
+        preloader.classList.add("fade-out");
+
+        // Enable scrolling and show main content
+        document.body.style.overflow = "visible";
+
+        // Remove preloader from DOM after animation completes
+        setTimeout(() => {
+            if (preloader.parentNode) {
+                preloader.parentNode.removeChild(preloader);
+            }
+
+            // Trigger any post-load animations
+            document.body.classList.add("preloader-finished");
+
+            console.log("🌸 Preloader animation completed successfully");
+        }, 800); // Match CSS transition duration
+    }
+
+    // Disable scrolling during preloader
+    document.body.style.overflow = "hidden";
+
+    // Fallback: Hide preloader after maximum time regardless of loading state
+    setTimeout(() => {
+        if (preloader && !preloader.classList.contains("fade-out")) {
+            console.warn("⚠️ Preloader timeout reached, forcing hide");
+            hidePreloader();
+        }
+    }, 6000); // 6 seconds maximum
+
+    // Add keyboard accessibility
+    preloader.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            hidePreloader();
+        }
+    });
+
+    // Optional: Click to skip (for development/testing)
+    if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+    ) {
+        preloader.addEventListener("click", () => {
+            console.log("🔧 Development mode: Preloader skipped by click");
+            hidePreloader();
+        });
+
+        // Add visual indicator in development
+        const skipText = document.createElement("div");
+        skipText.textContent = "Click to skip (dev mode)";
+        skipText.style.cssText = `
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            color: var(--text-light);
+        `;
+        preloader.appendChild(skipText);
+    }
+}
+
+/**
  * Initialize background system with optimization
  */
 function initializeBackground() {
-    // Preload background image for better performance
-    const backgroundImg = new Image();
-    backgroundImg.onload = function () {
-        // Add class to trigger fade-in animation
-        document.body.classList.add("background-loaded");
-        console.log("🎨 Background image loaded successfully");
-    };
+    // Delay background initialization until preloader is finishing
+    const initDelay = document.getElementById("preloader") ? 2500 : 0;
 
-    backgroundImg.onerror = function () {
-        // Fallback: still show the gradient overlay
-        document.body.classList.add("background-loaded");
-        console.warn("⚠️ Background image failed to load, using fallback");
-    };
+    setTimeout(() => {
+        // Preload background image for better performance
+        const backgroundImg = new Image();
+        backgroundImg.onload = function () {
+            // Add class to trigger fade-in animation
+            document.body.classList.add("background-loaded");
+            console.log("🎨 Background image loaded successfully");
+        };
 
-    // Start loading the background image
-    backgroundImg.src = "img/background.png";
+        backgroundImg.onerror = function () {
+            // Fallback: still show the gradient overlay
+            document.body.classList.add("background-loaded");
+            console.warn("⚠️ Background image failed to load, using fallback");
+        };
 
-    // Add loading class immediately
-    document.body.classList.add("background-loading");
+        // Start loading the background image
+        backgroundImg.src = "img/background.png";
 
-    // Performance optimization for mobile devices
-    if (window.innerWidth <= 768) {
-        // Reduce background effects on mobile for better performance
-        const style = document.createElement("style");
-        style.textContent = `
+        // Add loading class immediately
+        document.body.classList.add("background-loading");
+
+        // Performance optimization for mobile devices
+        if (window.innerWidth <= 768) {
+            // Reduce background effects on mobile for better performance
+            const style = document.createElement("style");
+            style.textContent = `
             body::before {
                 background-size: cover;
                 background-attachment: scroll;
                 will-change: auto;
             }
         `;
-        document.head.appendChild(style);
-    }
-
-    // Add subtle parallax effect on scroll for desktop
-    if (window.innerWidth > 768) {
-        let ticking = false;
-
-        function updateBackground() {
-            const scrolled = window.pageYOffset;
-            const parallaxSpeed = 0.3; // Subtle effect
-            const yPos = -(scrolled * parallaxSpeed);
-
-            document.documentElement.style.setProperty(
-                "--bg-y-pos",
-                `${yPos}px`
-            );
-            ticking = false;
+            document.head.appendChild(style);
         }
 
-        function requestBackgroundUpdate() {
-            if (!ticking) {
-                requestAnimationFrame(updateBackground);
-                ticking = true;
+        // Add subtle parallax effect on scroll for desktop
+        if (window.innerWidth > 768) {
+            let ticking = false;
+
+            function updateBackground() {
+                const scrolled = window.pageYOffset;
+                const parallaxSpeed = 0.3; // Subtle effect
+                const yPos = -(scrolled * parallaxSpeed);
+
+                document.documentElement.style.setProperty(
+                    "--bg-y-pos",
+                    `${yPos}px`
+                );
+                ticking = false;
             }
-        }
 
-        // Add CSS custom property for parallax
-        const parallaxStyle = document.createElement("style");
-        parallaxStyle.textContent = `
+            function requestBackgroundUpdate() {
+                if (!ticking) {
+                    requestAnimationFrame(updateBackground);
+                    ticking = true;
+                }
+            }
+
+            // Add CSS custom property for parallax
+            const parallaxStyle = document.createElement("style");
+            parallaxStyle.textContent = `
             :root {
                 --bg-y-pos: 0px;
             }
@@ -120,13 +238,14 @@ function initializeBackground() {
                 background-position: center calc(50% + var(--bg-y-pos));
             }
         `;
-        document.head.appendChild(parallaxStyle);
+            document.head.appendChild(parallaxStyle);
 
-        // Listen to scroll events with throttling
-        window.addEventListener("scroll", requestBackgroundUpdate, {
-            passive: true,
-        });
-    }
+            // Listen to scroll events with throttling
+            window.addEventListener("scroll", requestBackgroundUpdate, {
+                passive: true,
+            });
+        }
+    }, initDelay); // Close the setTimeout
 }
 
 function initializeDynamicYear() {
