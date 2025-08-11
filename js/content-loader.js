@@ -78,6 +78,9 @@ class ContentLoader {
                 case "historia-flores-bach":
                     this.renderHistoriaSection(section);
                     break;
+                case "about-me":
+                    this.renderAboutMeSection(section);
+                    break;
                 case "coaching-ontologico":
                     this.renderCoachingSection(section);
                     break;
@@ -164,6 +167,91 @@ class ContentLoader {
         const systemText = sectionEl.querySelector(".info-card p");
         if (systemText)
             systemText.textContent = content.system_principles || "";
+    }
+
+    /**
+     * Renderizar sección About Me
+     */
+    renderAboutMeSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("about-me");
+
+        if (!sectionEl) return;
+
+        // Actualizar título
+        const heading = sectionEl.querySelector("h2");
+        if (heading) heading.textContent = content.heading || "";
+
+        // Actualizar foto
+        if (content.photo) {
+            const photoImg = sectionEl.querySelector(".melisa-photo");
+            const captionName = sectionEl.querySelector(".photo-caption h4");
+            const captionTitle = sectionEl.querySelector(".photo-caption p");
+
+            if (photoImg) {
+                photoImg.src = content.photo.src || "";
+                photoImg.alt = content.photo.alt || "";
+            }
+
+            if (captionName) {
+                captionName.textContent = content.photo.caption_name || "";
+            }
+
+            if (captionTitle) {
+                captionTitle.textContent = content.photo.caption_title || "";
+            }
+        }
+
+        // Actualizar historia
+        if (content.story) {
+            const storyParagraphs = content.story.split("\n\n");
+            const storyContainer = sectionEl.querySelector(".about-story");
+
+            if (storyContainer) {
+                // Limpiar contenido existente
+                storyContainer.innerHTML = "";
+
+                // Agregar párrafos
+                storyParagraphs.forEach((paragraph, index) => {
+                    const p = document.createElement("p");
+                    p.className =
+                        index === storyParagraphs.length - 1
+                            ? "story-text highlight"
+                            : "story-text";
+                    p.textContent = paragraph;
+                    storyContainer.appendChild(p);
+                });
+            }
+        }
+
+        // Actualizar highlights
+        if (content.highlights) {
+            const highlightsContainer =
+                sectionEl.querySelector(".about-highlights");
+            if (highlightsContainer) {
+                highlightsContainer.innerHTML = "";
+
+                content.highlights.forEach((highlight, index) => {
+                    const highlightEl = document.createElement("div");
+                    highlightEl.className = "highlight-item";
+                    highlightEl.setAttribute("data-aos", "fade-up");
+                    highlightEl.setAttribute(
+                        "data-aos-delay",
+                        (index + 1) * 100
+                    );
+
+                    highlightEl.innerHTML = `
+                        <div class="highlight-icon">
+                            <i class="${highlight.icon}"></i>
+                        </div>
+                        <h3>${highlight.title}</h3>
+                        <p>${highlight.description}</p>
+                    `;
+
+                    highlightsContainer.appendChild(highlightEl);
+                });
+            }
+        }
     }
 
     /**

@@ -9,6 +9,9 @@
 // ===============================================
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Initialize background system
+    initializeBackground();
+
     // Initialize dynamic year in footer
     initializeDynamicYear();
 
@@ -45,6 +48,86 @@ document.addEventListener("DOMContentLoaded", function () {
 // ===============================================
 // DYNAMIC YEAR FUNCTIONALITY
 // ===============================================
+
+/**
+ * Initialize background system with optimization
+ */
+function initializeBackground() {
+    // Preload background image for better performance
+    const backgroundImg = new Image();
+    backgroundImg.onload = function () {
+        // Add class to trigger fade-in animation
+        document.body.classList.add("background-loaded");
+        console.log("🎨 Background image loaded successfully");
+    };
+
+    backgroundImg.onerror = function () {
+        // Fallback: still show the gradient overlay
+        document.body.classList.add("background-loaded");
+        console.warn("⚠️ Background image failed to load, using fallback");
+    };
+
+    // Start loading the background image
+    backgroundImg.src = "img/background.png";
+
+    // Add loading class immediately
+    document.body.classList.add("background-loading");
+
+    // Performance optimization for mobile devices
+    if (window.innerWidth <= 768) {
+        // Reduce background effects on mobile for better performance
+        const style = document.createElement("style");
+        style.textContent = `
+            body::before {
+                background-size: cover;
+                background-attachment: scroll;
+                will-change: auto;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Add subtle parallax effect on scroll for desktop
+    if (window.innerWidth > 768) {
+        let ticking = false;
+
+        function updateBackground() {
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.3; // Subtle effect
+            const yPos = -(scrolled * parallaxSpeed);
+
+            document.documentElement.style.setProperty(
+                "--bg-y-pos",
+                `${yPos}px`
+            );
+            ticking = false;
+        }
+
+        function requestBackgroundUpdate() {
+            if (!ticking) {
+                requestAnimationFrame(updateBackground);
+                ticking = true;
+            }
+        }
+
+        // Add CSS custom property for parallax
+        const parallaxStyle = document.createElement("style");
+        parallaxStyle.textContent = `
+            :root {
+                --bg-y-pos: 0px;
+            }
+            body::before {
+                background-position: center calc(50% + var(--bg-y-pos));
+            }
+        `;
+        document.head.appendChild(parallaxStyle);
+
+        // Listen to scroll events with throttling
+        window.addEventListener("scroll", requestBackgroundUpdate, {
+            passive: true,
+        });
+    }
+}
 
 function initializeDynamicYear() {
     const currentYearElement = document.getElementById("current-year");

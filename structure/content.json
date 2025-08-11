@@ -25,6 +25,42 @@
             }
         },
         {
+            "id": "about-me",
+            "title": "Sobre Mí",
+            "content": {
+                "heading": "Mi Historia Personal",
+                "photo": {
+                    "src": "https://images.unsplash.com/photo-1494790108755-2616c6d29e6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                    "alt": "Melisa Santoianni - Coach Floral",
+                    "caption_name": "Melisa Santoianni",
+                    "caption_title": "Coach Floral & Terapeuta"
+                },
+                "story": "Mi vida siempre ha sido una búsqueda de bienestar, no solo para mí, sino para quienes me rodean. Nací en la bulliciosa Buenos Aires, en una familia de gente trabajadora que me enseñó el valor del esfuerzo. Con el tiempo, sentí el llamado de una vida más tranquila, que me llevó a Balcarce, una ciudad que se convirtió en el lienzo de mi primer gran emprendimiento: la decoración de tortas. Fue un éxito, sí, pero la vida, como siempre, tenía otros planes.\n\nLa pandemia nos obligó a todos a parar, a reinventarnos. Fue ahí, en el silencio de esos días, donde descubrí un camino que resonaba con lo más profundo de mi ser: el poder de lo natural y las terapias alternativas. Así, me convertí en terapeuta floral y en aromaterapeuta, y la gratitud de mis primeros pacientes me confirmó que estaba en el lugar correcto. Ver el alivio en sus rostros y recibir sus recomendaciones me impulsó a seguir.\n\nSin embargo, algo me decía que podía ir más allá. Sabía que las personas necesitaban más que una solución, necesitaban herramientas. Fue el coaching ontológico el que me dio la respuesta. Al integrar estas poderosas herramientas con mis conocimientos en terapias florales, descubrí la sinergia perfecta: no solo podía ofrecer un preparado específico, sino también guiar a las personas a encontrar ese bienestar que anhelan, de forma duradera.\n\nHoy, mi misión es acompañarte en tu propio camino, brindándote las herramientas necesarias para que descubras ese equilibrio y bienestar que yo encontré. Porque sé, desde el corazón, que es posible.",
+                "highlights": [
+                    {
+                        "icon": "fas fa-map-marker-alt",
+                        "title": "De Buenos Aires a Balcarce",
+                        "description": "Una búsqueda de tranquilidad que me llevó a descubrir mi verdadero camino"
+                    },
+                    {
+                        "icon": "fas fa-birthday-cake",
+                        "title": "Emprendedora desde Siempre",
+                        "description": "Mi primer éxito en decoración de tortas me enseñó el valor del trabajo creativo"
+                    },
+                    {
+                        "icon": "fas fa-seedling",
+                        "title": "Descubrimiento Natural",
+                        "description": "La pandemia me llevó a las terapias alternativas y el poder de lo natural"
+                    },
+                    {
+                        "icon": "fas fa-heart",
+                        "title": "Misión de Vida",
+                        "description": "Acompañar a otros en su camino hacia el bienestar duradero"
+                    }
+                ]
+            }
+        },
+        {
             "id": "coaching-ontologico",
             "title": "¿Qué es el Coaching Ontológico?",
             "content": {

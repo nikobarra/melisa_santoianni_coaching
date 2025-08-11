@@ -48,6 +48,77 @@ body {
     color: var(--text-dark);
     background-color: var(--primary-color);
     overflow-x: hidden;
+    position: relative;
+}
+
+/* ===============================================
+   BACKGROUND SYSTEM
+   =============================================== */
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            135deg,
+            rgba(247, 250, 252, 0.95) 0%,
+            rgba(247, 250, 252, 0.9) 25%,
+            rgba(247, 250, 252, 0.85) 50%,
+            rgba(247, 250, 252, 0.9) 75%,
+            rgba(247, 250, 252, 0.95) 100%
+        ),
+        url("../img/background.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: -2;
+    will-change: transform;
+}
+
+/* Overlay sutil para mejorar contraste */
+.content-section {
+    position: relative;
+}
+
+.content-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Secciones alternativas con overlay más fuerte */
+.alt-bg::before {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Background loading optimization */
+.background-loaded body::before {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body::before {
+    opacity: 0;
+}
+
+/* Hero section enhancement with background */
+.hero {
+    position: relative;
+    background: transparent;
+}
+
+.hero::before {
+    background: rgba(255, 255, 255, 0.01);
 }
 
 img {
@@ -1152,6 +1223,166 @@ p {
 }
 
 /* ===============================================
+   ABOUT ME SECTION
+   =============================================== */
+
+.about-content {
+    display: grid;
+    grid-template-columns: 300px 1fr 350px;
+    gap: 3rem;
+    align-items: flex-start;
+    margin-top: 3rem;
+}
+
+.about-photo {
+    grid-column: 1;
+}
+
+.about-story {
+    grid-column: 2;
+}
+
+.photo-container {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 8px 25px var(--shadow);
+    transition: var(--transition);
+}
+
+.photo-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px var(--shadow-hover);
+}
+
+.melisa-photo {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    transition: var(--transition);
+}
+
+.photo-container:hover .melisa-photo {
+    transform: scale(1.05);
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.9)
+    );
+    color: var(--white);
+    padding: 2rem 1.5rem 1.5rem;
+    transform: translateY(100%);
+    transition: var(--transition);
+}
+
+.photo-container:hover .photo-overlay {
+    transform: translateY(0);
+}
+
+.photo-caption h4 {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--white);
+}
+
+.photo-caption p {
+    font-size: 0.95rem;
+    margin: 0;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.about-highlights {
+    grid-column: 3;
+}
+
+.story-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    text-align: justify;
+}
+
+.story-text.highlight {
+    font-weight: 600;
+    font-style: italic;
+    color: var(--tertiary-color);
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+    margin-top: 2rem;
+}
+
+.about-highlights {
+    flex: 1;
+    display: grid;
+    gap: 2rem;
+}
+
+.highlight-item {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.highlight-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.highlight-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(
+        135deg,
+        var(--accent-color),
+        var(--tertiary-color)
+    );
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.highlight-icon i {
+    font-size: 1.5rem;
+    color: var(--white);
+}
+
+.highlight-item h3 {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.highlight-item p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ===============================================
    RESPONSIVE DESIGN
    =============================================== */
 
@@ -1214,6 +1445,40 @@ p {
 
     .main-section-subtitle {
         font-size: 1.1rem;
+    }
+
+    /* About Me Responsive */
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-photo {
+        grid-column: 1;
+        justify-self: center;
+        max-width: 280px;
+    }
+
+    .about-story {
+        grid-column: 1;
+        margin-bottom: 2rem;
+    }
+
+    .about-highlights {
+        grid-column: 1;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .melisa-photo {
+        height: 350px;
+    }
+
+    /* Background optimizations for mobile */
+    body::before {
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center top;
     }
 
     .nav-menu {
