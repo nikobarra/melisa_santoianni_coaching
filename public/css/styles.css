@@ -127,7 +127,7 @@ body::before {
                 rgba(247, 250, 252, 0.95) 100%
             )
             center center/cover no-repeat fixed,
-        url("../img/background.png") center center/cover no-repeat fixed;
+        url("../img/background.webp") center center/cover no-repeat fixed;
     z-index: -2;
     will-change: transform;
     opacity: 0;
