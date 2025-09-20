@@ -1,158 +1,58 @@
-/**
- * COACHING FLORAL - MAIN JAVASCRIPT
- * Melisa Santoianni - Professional Website
- * Enhanced user experience and interactivity
- */
-
-// ===============================================
-// INITIALIZATION & DOM CONTENT LOADED
-// ===============================================
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Initialize preloader first
-    initializePreloader();
-
-    // Initialize background system
-    initializeBackground();
-
-    // Initialize dynamic year in footer
-    initializeDynamicYear();
-
-    // Wait for content loader to initialize first
-    setTimeout(() => {
-        // Initialize all components
-        initializeNavigation();
-        initializeScrollEffects();
-        initializeAnimations();
-        initializeSmoothScrolling();
-        initializeContactForm();
-        initializePerformanceOptimizations();
-
-        // Initialize AOS (Animate On Scroll)
-        if (typeof AOS !== "undefined") {
-            AOS.init({
-                duration: 800,
-                easing: "ease-in-out",
-                once: true,
-                offset: 100,
-                disable: function () {
-                    // Disable animations on mobile devices with reduced performance
-                    return (
-                        window.innerWidth < 768 &&
-                        navigator.connection &&
-                        navigator.connection.effectiveType === "slow-2g"
-                    );
-                },
-            });
-        }
-    }, 100); // Small delay to ensure content is loaded first
-});
-
-// ===============================================
-// DYNAMIC YEAR FUNCTIONALITY
-// ===============================================
-
-/**
- * Initialize preloader with elegant animations
- */
 function initializePreloader() {
-    const preloader = document.getElementById("preloader");
-    if (!preloader) return;
-
-    // Preload critical resources for smoother experience
-    const criticalResources = [
-        "img/logo.png",
-        "img/background.png",
-        "css/styles.css",
-    ];
-
-    let loadedResources = 0;
-    const totalResources = criticalResources.length;
-
-    // Function to update progress
-    function updateProgress() {
-        loadedResources++;
-        const progress = (loadedResources / totalResources) * 100;
-
-        // Update progress bar if needed
-        const progressBar = preloader.querySelector(".progress-bar::before");
-
-        // Check if all resources are loaded
-        if (loadedResources >= totalResources) {
-            // Wait for animations to complete, then hide preloader
+    let e = document.getElementById("preloader");
+    if (!e) return;
+    let t = ["img/logo.png", "img/background.png", "css/styles.css"],
+        n = 0,
+        i = t.length;
+    function a() {
+        n++,
+            e.querySelector(".progress-bar::before"),
+            n >= i &&
+                setTimeout(() => {
+                    o();
+                }, 3e3);
+    }
+    function o() {
+        e.classList.add("fade-out"),
+            (document.body.style.overflow = "visible"),
             setTimeout(() => {
-                hidePreloader();
-            }, 3000); // 3 seconds total duration
-        }
+                e.parentNode && e.parentNode.removeChild(e),
+                    document.body.classList.add("preloader-finished"),
+                    console.log(
+                        "\uD83C\uDF38 Preloader animation completed successfully"
+                    );
+            }, 800);
     }
-
-    // Preload resources
-    criticalResources.forEach((resource) => {
-        if (resource.endsWith(".png") || resource.endsWith(".jpg")) {
-            const img = new Image();
-            img.onload = updateProgress;
-            img.onerror = updateProgress; // Count errors as loaded to prevent hanging
-            img.src = resource;
-        } else {
-            // For CSS and other resources, just simulate loading
-            setTimeout(updateProgress, 500);
-        }
-    });
-
-    // Hide preloader function
-    function hidePreloader() {
-        preloader.classList.add("fade-out");
-
-        // Enable scrolling and show main content
-        document.body.style.overflow = "visible";
-
-        // Remove preloader from DOM after animation completes
+    t.forEach((e) => {
+        if (e.endsWith(".png") || e.endsWith(".jpg")) {
+            let t = new Image();
+            (t.onload = a), (t.onerror = a), (t.src = e);
+        } else setTimeout(a, 500);
+    }),
+        (document.body.style.overflow = "hidden"),
         setTimeout(() => {
-            if (preloader.parentNode) {
-                preloader.parentNode.removeChild(preloader);
-            }
-
-            // Trigger any post-load animations
-            document.body.classList.add("preloader-finished");
-
-            console.log("🌸 Preloader animation completed successfully");
-        }, 800); // Match CSS transition duration
-    }
-
-    // Disable scrolling during preloader
-    document.body.style.overflow = "hidden";
-
-    // Fallback: Hide preloader after maximum time regardless of loading state
-    setTimeout(() => {
-        if (preloader && !preloader.classList.contains("fade-out")) {
-            console.warn("⚠️ Preloader timeout reached, forcing hide");
-            hidePreloader();
-        }
-    }, 6000); // 6 seconds maximum
-
-    // Add keyboard accessibility
-    preloader.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-            hidePreloader();
-        }
-    });
-
-    // Optional: Click to skip (for development/testing)
-    const isDevelopment =
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1" ||
-        window.location.hostname.includes("vercel.app");
-
-    if (isDevelopment) {
-        preloader.addEventListener("click", () => {
-            console.log("🔧 Development mode: Preloader skipped by click");
-            hidePreloader();
+            e &&
+                !e.classList.contains("fade-out") &&
+                (console.warn("⚠️ Preloader timeout reached, forcing hide"),
+                o());
+        }, 6e3),
+        e.addEventListener("keydown", (e) => {
+            ("Enter" === e.key || " " === e.key) && o();
         });
-
-        // Add visual indicator in development
-        const skipText = document.createElement("div");
-        skipText.textContent = "Click to skip (dev mode)";
-        skipText.style.cssText = `
+    let r =
+        "localhost" === window.location.hostname ||
+        "127.0.0.1" === window.location.hostname ||
+        window.location.hostname.includes("vercel.app");
+    if (r) {
+        e.addEventListener("click", () => {
+            console.log(
+                "\uD83D\uDD27 Development mode: Preloader skipped by click"
+            ),
+                o();
+        });
+        let l = document.createElement("div");
+        (l.textContent = "Click to skip (dev mode)"),
+            (l.style.cssText = `
             position: absolute;
             bottom: 20px;
             left: 50%;
@@ -160,300 +60,190 @@ function initializePreloader() {
             font-size: 0.8rem;
             opacity: 0.6;
             color: var(--text-light);
-        `;
-        preloader.appendChild(skipText);
+        `),
+            e.appendChild(l);
     }
 }
-
-/**
- * Initialize background system with optimization
- */
 function initializeBackground() {
-    // Delay background initialization until preloader is finishing
-    const initDelay = document.getElementById("preloader") ? 2500 : 0;
-
+    let e = document.getElementById("preloader") ? 2500 : 0;
     setTimeout(() => {
-        // Preload background image for better performance
-        const backgroundImg = new Image();
-        backgroundImg.onload = function () {
-            // Add class to trigger fade-in animation
-            document.body.classList.add("background-loaded");
-            console.log("🎨 Background image loaded successfully");
-        };
-
-        backgroundImg.onerror = function () {
-            // Fallback: still show the gradient overlay
-            document.body.classList.add("background-loaded");
-            console.warn("⚠️ Background image failed to load, using fallback");
-        };
-
-        // Start loading the background image
-        backgroundImg.src = "img/background.png";
-
-        // Add loading class immediately
-        document.body.classList.add("background-loading");
-
-        // Performance optimization for mobile devices
-        if (window.innerWidth <= 768) {
-            // Reduce background effects on mobile for better performance
-            const style = document.createElement("style");
-            style.textContent = `
+        let e = new Image();
+        if (
+            ((e.onload = function () {
+                document.body.classList.add("background-loaded"),
+                    console.log(
+                        "\uD83C\uDFA8 Background image loaded successfully"
+                    );
+            }),
+            (e.onerror = function () {
+                document.body.classList.add("background-loaded"),
+                    console.warn(
+                        "⚠️ Background image failed to load, using fallback"
+                    );
+            }),
+            (e.src = "img/background.png"),
+            document.body.classList.add("background-loading"),
+            window.innerWidth <= 768)
+        ) {
+            let t = document.createElement("style");
+            (t.textContent = `
             body::before {
                 background-size: cover;
                 background-attachment: scroll;
                 will-change: auto;
             }
-        `;
-            document.head.appendChild(style);
+        `),
+                document.head.appendChild(t);
         }
-
-        // Add subtle parallax effect on scroll for desktop
         if (window.innerWidth > 768) {
-            let ticking = false;
-
-            function updateBackground() {
-                const scrolled = window.pageYOffset;
-                const parallaxSpeed = 0.3; // Subtle effect
-                const yPos = -(scrolled * parallaxSpeed);
-
+            let n = !1;
+            function i() {
+                let e = window.pageYOffset;
                 document.documentElement.style.setProperty(
                     "--bg-y-pos",
-                    `${yPos}px`
-                );
-                ticking = false;
+                    `${-(0.3 * e)}px`
+                ),
+                    (n = !1);
             }
-
-            function requestBackgroundUpdate() {
-                if (!ticking) {
-                    requestAnimationFrame(updateBackground);
-                    ticking = true;
-                }
-            }
-
-            // Add CSS custom property for parallax
-            const parallaxStyle = document.createElement("style");
-            parallaxStyle.textContent = `
+            let a = document.createElement("style");
+            (a.textContent = `
             :root {
                 --bg-y-pos: 0px;
             }
             body::before {
                 background-position: center calc(50% + var(--bg-y-pos));
             }
-        `;
-            document.head.appendChild(parallaxStyle);
-
-            // Listen to scroll events with throttling
-            window.addEventListener("scroll", requestBackgroundUpdate, {
-                passive: true,
-            });
-        }
-    }, initDelay); // Close the setTimeout
-}
-
-function initializeDynamicYear() {
-    const currentYearElement = document.getElementById("current-year");
-    if (currentYearElement) {
-        const currentYear = new Date().getFullYear();
-        currentYearElement.textContent = currentYear;
-
-        // Optional: Update year automatically if page stays open past New Year
-        // This is useful for long-running single page applications
-        const now = new Date();
-        const nextYear = new Date(now.getFullYear() + 1, 0, 1); // January 1st of next year
-        const timeUntilNextYear = nextYear - now;
-
-        // If less than 24 hours until new year, set up auto-update
-        if (timeUntilNextYear < 24 * 60 * 60 * 1000) {
-            setTimeout(() => {
-                const newYear = new Date().getFullYear();
-                currentYearElement.textContent = newYear;
-                console.log(
-                    `🎉 ¡Feliz Año Nuevo ${newYear}! Footer actualizado automáticamente.`
+        `),
+                document.head.appendChild(a),
+                window.addEventListener(
+                    "scroll",
+                    function e() {
+                        n || (requestAnimationFrame(i), (n = !0));
+                    },
+                    { passive: !0 }
                 );
-            }, timeUntilNextYear);
         }
+    }, e);
+}
+function initializeDynamicYear() {
+    let e = document.getElementById("current-year");
+    if (e) {
+        let t = new Date().getFullYear();
+        e.textContent = t;
+        let n = new Date(),
+            i = new Date(n.getFullYear() + 1, 0, 1),
+            a = i - n;
+        a < 864e5 &&
+            setTimeout(() => {
+                let t = new Date().getFullYear();
+                (e.textContent = t),
+                    console.log(
+                        `🎉 \xa1Feliz A\xf1o Nuevo ${t}! Footer actualizado autom\xe1ticamente.`
+                    );
+            }, a);
     }
 }
-
-// ===============================================
-// NAVIGATION FUNCTIONALITY
-// ===============================================
-
 function initializeNavigation() {
-    const navbar = document.getElementById("navbar");
-    const navToggle = document.getElementById("nav-toggle");
-    const navMenu = document.getElementById("nav-menu");
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    // Detectar resoluciones específicas que necesitan menú móvil forzado
-    function checkSpecificResolutions() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        // Resolución específica 2992x1224 y similares (con margen de error)
-        const isSpecificResolution =
-            (width >= 2900 &&
-                width <= 3100 &&
-                height >= 1200 &&
-                height <= 1300) ||
-            (width >= 1200 &&
-                width <= 1300 &&
-                height >= 2900 &&
-                height <= 3100) ||
-            // Otras resoluciones problemáticas que requieren menú móvil
-            (width > 1200 && width < 3000 && height > 1200 && height < 1400);
-
-        if (isSpecificResolution) {
-            document.body.classList.add("force-mobile-menu");
-            console.log(
-                `🔧 Forced mobile menu for resolution: ${width}x${height}`
-            );
-        } else {
-            document.body.classList.remove("force-mobile-menu");
-        }
+    let e = document.getElementById("navbar"),
+        t = document.getElementById("nav-toggle"),
+        n = document.getElementById("nav-menu"),
+        i = document.querySelectorAll(".nav-link");
+    function a() {
+        let e = window.innerWidth,
+            t = window.innerHeight;
+        (e >= 2900 && e <= 3100 && t >= 1200 && t <= 1300) ||
+        (e >= 1200 && e <= 1300 && t >= 2900 && t <= 3100) ||
+        (e > 1200 && e < 3e3 && t > 1200 && t < 1400)
+            ? (document.body.classList.add("force-mobile-menu"),
+              console.log(`🔧 Forced mobile menu for resolution: ${e}x${t}`))
+            : document.body.classList.remove("force-mobile-menu");
     }
-
-    // Verificar al cargar y al redimensionar
-    checkSpecificResolutions();
-    window.addEventListener("resize", checkSpecificResolutions);
-
-    // Mobile menu toggle
-    if (navToggle && navMenu) {
-        navToggle.addEventListener("click", toggleMobileMenu);
-        navToggle.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleMobileMenu();
-            }
+    a(),
+        window.addEventListener("resize", a),
+        t &&
+            n &&
+            (t.addEventListener("click", r),
+            t.addEventListener("keydown", function (e) {
+                ("Enter" === e.key || " " === e.key) &&
+                    (e.preventDefault(), r());
+            })),
+        i.forEach((e) => {
+            e.addEventListener("click", l);
+        }),
+        document.addEventListener("click", function (t) {
+            !e.contains(t.target) && n.classList.contains("active") && l();
         });
+    let o = window.scrollY;
+    function r() {
+        n.classList.toggle("active"),
+            t.classList.toggle("active"),
+            t.setAttribute(
+                "aria-expanded",
+                t.classList.contains("active") ? "true" : "false"
+            ),
+            (document.body.style.overflow = n.classList.contains("active")
+                ? "hidden"
+                : "");
     }
-
-    // Close mobile menu when clicking on links
-    navLinks.forEach((link) => {
-        link.addEventListener("click", closeMobileMenu);
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener("click", function (e) {
-        if (
-            !navbar.contains(e.target) &&
-            navMenu.classList.contains("active")
-        ) {
-            closeMobileMenu();
-        }
-    });
-
-    // Navbar scroll effect
-    let lastScrollY = window.scrollY;
-    window.addEventListener("scroll", debounce(handleNavbarScroll, 10));
-
-    // Active section highlighting
-    window.addEventListener("scroll", debounce(updateActiveSection, 50));
-
-    function toggleMobileMenu() {
-        navMenu.classList.toggle("active");
-        navToggle.classList.toggle("active");
-        navToggle.setAttribute(
-            "aria-expanded",
-            navToggle.classList.contains("active") ? "true" : "false"
+    function l() {
+        n.classList.remove("active"),
+            t.classList.remove("active"),
+            t.setAttribute("aria-expanded", "false"),
+            (document.body.style.overflow = "");
+    }
+    window.addEventListener(
+        "scroll",
+        debounce(function t() {
+            let n = window.scrollY;
+            n > 50
+                ? e.classList.add("scrolled")
+                : e.classList.remove("scrolled"),
+                n > o && n > 100
+                    ? (e.style.transform = "translateY(-100%)")
+                    : (e.style.transform = "translateY(0)"),
+                (o = n);
+        }, 10)
+    ),
+        window.addEventListener(
+            "scroll",
+            debounce(function e() {
+                let t = document.querySelectorAll("section[id]"),
+                    n = window.scrollY + 100;
+                t.forEach((e) => {
+                    let t = e.offsetTop,
+                        a = e.offsetHeight,
+                        o = e.getAttribute("id"),
+                        r = document.querySelector(`.nav-link[href="#${o}"]`);
+                    n >= t &&
+                        n < t + a &&
+                        (i.forEach((e) => e.classList.remove("active")),
+                        r && r.classList.add("active"));
+                });
+            }, 50)
         );
-
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = navMenu.classList.contains("active")
-            ? "hidden"
-            : "";
-    }
-
-    function closeMobileMenu() {
-        navMenu.classList.remove("active");
-        navToggle.classList.remove("active");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-    }
-
-    function handleNavbarScroll() {
-        const currentScrollY = window.scrollY;
-
-        // Add scrolled class for styling
-        if (currentScrollY > 50) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-
-        // Hide/show navbar on scroll (optional enhancement)
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            navbar.style.transform = "translateY(-100%)";
-        } else {
-            navbar.style.transform = "translateY(0)";
-        }
-
-        lastScrollY = currentScrollY;
-    }
-
-    function updateActiveSection() {
-        const sections = document.querySelectorAll("section[id]");
-        const scrollPos = window.scrollY + 100;
-
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute("id");
-            const correspondingLink = document.querySelector(
-                `.nav-link[href="#${sectionId}"]`
-            );
-
-            if (
-                scrollPos >= sectionTop &&
-                scrollPos < sectionTop + sectionHeight
-            ) {
-                navLinks.forEach((link) => link.classList.remove("active"));
-                if (correspondingLink) {
-                    correspondingLink.classList.add("active");
-                }
-            }
-        });
-    }
 }
-
-// ===============================================
-// SCROLL EFFECTS & ANIMATIONS
-// ===============================================
-
 function initializeScrollEffects() {
-    // Parallax effect for hero section
-    const hero = document.querySelector(".hero");
-    const heroImage = document.querySelector(".hero-image img");
-
-    if (hero && heroImage) {
+    let e = document.querySelector(".hero"),
+        t = document.querySelector(".hero-image img");
+    e &&
+        t &&
         window.addEventListener(
             "scroll",
             debounce(function () {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.3;
-
-                // Only apply parallax on desktop to avoid performance issues
-                if (window.innerWidth > 768) {
-                    heroImage.style.transform = `translateY(${rate}px)`;
-                }
+                let e = window.pageYOffset;
+                window.innerWidth > 768 &&
+                    (t.style.transform = `translateY(${-0.3 * e}px)`);
             }, 16)
-        );
-    }
-
-    // Scroll progress indicator (optional enhancement)
-    createScrollProgressIndicator();
-
-    // Intersection Observer for fade-in animations
-    initializeIntersectionObserver();
+        ),
+        createScrollProgressIndicator(),
+        initializeIntersectionObserver();
 }
-
 function createScrollProgressIndicator() {
-    const progressBar = document.createElement("div");
-    progressBar.className = "scroll-progress";
-    progressBar.innerHTML = '<div class="scroll-progress-bar"></div>';
-
-    const style = document.createElement("style");
-    style.textContent = `
+    let e = document.createElement("div");
+    (e.className = "scroll-progress"),
+        (e.innerHTML = '<div class="scroll-progress-bar"></div>');
+    let t = document.createElement("style");
+    (t.textContent = `
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -469,107 +259,69 @@ function createScrollProgressIndicator() {
             width: 0%;
             transition: width 0.1s ease;
         }
-    `;
-
-    document.head.appendChild(style);
-    document.body.appendChild(progressBar);
-
-    const progressBarFill = progressBar.querySelector(".scroll-progress-bar");
-
+    `),
+        document.head.appendChild(t),
+        document.body.appendChild(e);
+    let n = e.querySelector(".scroll-progress-bar");
     window.addEventListener(
         "scroll",
         debounce(function () {
-            const scrollTop = window.pageYOffset;
-            const docHeight =
-                document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            progressBarFill.style.width = scrollPercent + "%";
+            let e = window.pageYOffset,
+                t = document.documentElement.scrollHeight - window.innerHeight;
+            n.style.width = (e / t) * 100 + "%";
         }, 10)
     );
 }
-
 function initializeIntersectionObserver() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-    };
-
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("animate-in");
-
-                // Special animations for specific elements
-                if (entry.target.classList.contains("timeline-item")) {
-                    setTimeout(() => {
-                        entry.target.classList.add("timeline-animate");
-                    }, 200);
-                }
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements that should animate on scroll
-    const animateElements = document.querySelectorAll(
-        ".benefit-item, .target-item, .testimonial-card, .timeline-item, .fusion-card"
-    );
-
-    animateElements.forEach((el) => {
-        observer.observe(el);
-    });
-}
-
-// ===============================================
-// SMOOTH SCROLLING & ENHANCED UX
-// ===============================================
-
-function initializeSmoothScrolling() {
-    // Enhanced smooth scrolling for anchor links
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-    anchorLinks.forEach((link) => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute("href").substring(1);
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                const navbarHeight =
-                    document.getElementById("navbar").offsetHeight;
-                const targetPosition =
-                    targetElement.offsetTop - navbarHeight - 20;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: "smooth",
+    let e = new IntersectionObserver(
+            function (e) {
+                e.forEach((e) => {
+                    e.isIntersecting &&
+                        (e.target.classList.add("animate-in"),
+                        e.target.classList.contains("timeline-item") &&
+                            setTimeout(() => {
+                                e.target.classList.add("timeline-animate");
+                            }, 200));
                 });
-
-                // Update URL without jumping
-                history.pushState(null, null, `#${targetId}`);
-
-                // Focus management for accessibility
-                setTimeout(() => {
-                    targetElement.setAttribute("tabindex", "-1");
-                    targetElement.focus();
-                    targetElement.removeAttribute("tabindex");
-                }, 500);
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        ),
+        t = document.querySelectorAll(
+            ".benefit-item, .target-item, .testimonial-card, .timeline-item, .fusion-card"
+        );
+    t.forEach((t) => {
+        e.observe(t);
+    });
+}
+function initializeSmoothScrolling() {
+    let e = document.querySelectorAll('a[href^="#"]');
+    e.forEach((e) => {
+        e.addEventListener("click", function (e) {
+            e.preventDefault();
+            let t = this.getAttribute("href").substring(1),
+                n = document.getElementById(t);
+            if (n) {
+                let i = document.getElementById("navbar").offsetHeight,
+                    a = n.offsetTop - i - 20;
+                window.scrollTo({ top: a, behavior: "smooth" }),
+                    history.pushState(null, null, `#${t}`),
+                    setTimeout(() => {
+                        n.setAttribute("tabindex", "-1"),
+                            n.focus(),
+                            n.removeAttribute("tabindex");
+                    }, 500);
             }
         });
-    });
-
-    // Back to top button
-    createBackToTopButton();
+    }),
+        createBackToTopButton();
 }
-
 function createBackToTopButton() {
-    const backToTopButton = document.createElement("button");
-    backToTopButton.className = "back-to-top";
-    backToTopButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    backToTopButton.setAttribute("aria-label", "Volver al inicio");
-
-    const style = document.createElement("style");
-    style.textContent = `
+    let e = document.createElement("button");
+    (e.className = "back-to-top"),
+        (e.innerHTML = '<i class="fas fa-chevron-up"></i>'),
+        e.setAttribute("aria-label", "Volver al inicio");
+    let t = document.createElement("style");
+    (t.textContent = `
         .back-to-top {
             position: fixed;
             bottom: 2rem;
@@ -587,7 +339,7 @@ function createBackToTopButton() {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
             box-shadow: 0 4px 15px var(--shadow);
-            /* Asegurar que esté siempre dentro del viewport */
+            /* Asegurar que est\xe9 siempre dentro del viewport */
             max-width: calc(100vw - 4rem);
             max-height: calc(100vh - 4rem);
             box-sizing: border-box;
@@ -617,7 +369,7 @@ function createBackToTopButton() {
                 height: 45px;
             }
         }
-        /* Específico para resoluciones ultra-anchas como 2992x1224 */
+        /* Espec\xedfico para resoluciones ultra-anchas como 2992x1224 */
         @media (min-width: 1200px) and (max-width: 3100px) and (min-height: 1200px) and (max-height: 1400px) {
             .back-to-top {
                 position: fixed;
@@ -638,7 +390,7 @@ function createBackToTopButton() {
                 z-index: 1001;
             }
         }
-        /* Fallback para cualquier resolución problemática */
+        /* Fallback para cualquier resoluci\xf3n problem\xe1tica */
         @media (min-aspect-ratio: 2/1) {
             .back-to-top {
                 right: min(2rem, 5vw);
@@ -649,146 +401,100 @@ function createBackToTopButton() {
                 box-sizing: border-box;
             }
         }
-    `;
-
-    document.head.appendChild(style);
-    document.body.appendChild(backToTopButton);
-
-    // Show/hide back to top button
-    window.addEventListener(
-        "scroll",
-        debounce(function () {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add("visible");
-            } else {
-                backToTopButton.classList.remove("visible");
-            }
-        }, 100)
-    );
-
-    // Back to top functionality
-    backToTopButton.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
+    `),
+        document.head.appendChild(t),
+        document.body.appendChild(e),
+        window.addEventListener(
+            "scroll",
+            debounce(function () {
+                window.pageYOffset > 300
+                    ? e.classList.add("visible")
+                    : e.classList.remove("visible");
+            }, 100)
+        ),
+        e.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
-    });
 }
-
-// ===============================================
-// CONTACT FORM & INTERACTIONS
-// ===============================================
-
 function initializeContactForm() {
-    const contactButton = document.getElementById("contact-button");
-    const socialLinks = document.querySelectorAll(".social-link");
-
-    // Contact button click tracking and enhancement
-    if (contactButton) {
-        contactButton.addEventListener("click", function (e) {
-            e.preventDefault();
-
-            // Add click animation
-            this.style.transform = "scale(0.95)";
-            setTimeout(() => {
-                this.style.transform = "";
-            }, 150);
-
-            // Here you would typically open a modal, redirect to booking system, etc.
-            // For now, we'll show a placeholder alert
-            showContactModal();
-
-            // Analytics tracking (if implemented)
-            if (typeof gtag !== "undefined") {
-                gtag("event", "contact_button_click", {
-                    event_category: "engagement",
-                    event_label: "hero_cta",
-                });
-            }
+    let e = document.getElementById("contact-button"),
+        t = document.querySelectorAll(".social-link");
+    e &&
+        e.addEventListener("click", function (e) {
+            e.preventDefault(),
+                (this.style.transform = "scale(0.95)"),
+                setTimeout(() => {
+                    this.style.transform = "";
+                }, 150),
+                showContactModal(),
+                "undefined" != typeof gtag &&
+                    gtag("event", "contact_button_click", {
+                        event_category: "engagement",
+                        event_label: "hero_cta",
+                    });
+        }),
+        t.forEach((e) => {
+            e.addEventListener("click", function (e) {
+                if (
+                    ((this.style.transform = "scale(0.95)"),
+                    setTimeout(() => {
+                        this.style.transform = "";
+                    }, 150),
+                    "undefined" != typeof gtag)
+                ) {
+                    let t = this.classList.contains("instagram")
+                        ? "instagram"
+                        : "youtube";
+                    gtag("event", "social_link_click", {
+                        event_category: "social",
+                        event_label: t,
+                    });
+                }
+            });
         });
-    }
-
-    // Social links enhancement
-    socialLinks.forEach((link) => {
-        link.addEventListener("click", function (e) {
-            // Add click animation
-            this.style.transform = "scale(0.95)";
-            setTimeout(() => {
-                this.style.transform = "";
-            }, 150);
-
-            // Analytics tracking
-            if (typeof gtag !== "undefined") {
-                const platform = this.classList.contains("instagram")
-                    ? "instagram"
-                    : "youtube";
-                gtag("event", "social_link_click", {
-                    event_category: "social",
-                    event_label: platform,
-                });
-            }
-        });
-    });
 }
-
 function showContactModal() {
-    // Get contact info from content loader
-    let contactInfo = {
-        email: "melisantoianni@gmail.com",
-        whatsapp: "+542266440618",
-    };
-
-    // Try to get dynamic contact info if available
+    let e = { email: "melisantoianni@gmail.com", whatsapp: "+542266440618" };
     if (window.contentLoader && window.contentLoader.contentData) {
-        const contactSection = window.contentLoader.contentData.sections.find(
-            (section) => section.id === "contacto"
+        let t = window.contentLoader.contentData.sections.find(
+            (e) => "contacto" === e.id
         );
-        if (contactSection && contactSection.content.contact_info) {
-            contactInfo = contactSection.content.contact_info;
-        }
+        t && t.content.contact_info && (e = t.content.contact_info);
     }
-
-    // Create modal overlay
-    const modal = document.createElement("div");
-    modal.className = "contact-modal";
-    modal.innerHTML = `
+    let n = document.createElement("div");
+    (n.className = "contact-modal"),
+        (n.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-calendar-alt"></i> Reserva tu Sesión</h3>
+                <h3><i class="fas fa-calendar-alt"></i> Reserva tu Sesi\xf3n</h3>
                 <button class="modal-close" aria-label="Cerrar modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <p>¡Estás a un paso de comenzar tu transformación!</p>
-                <p>Para reservar tu sesión de descubrimiento gratuita, puedes contactarme a través de:</p>
+                <p>\xa1Est\xe1s a un paso de comenzar tu transformaci\xf3n!</p>
+                <p>Para reservar tu sesi\xf3n de descubrimiento gratuita, puedes contactarme a trav\xe9s de:</p>
                 <div class="contact-options">
-                    <a href="mailto:${
-                        contactInfo.email
-                    }" class="contact-option">
+                    <a href="mailto:${e.email}" class="contact-option">
                         <i class="fas fa-envelope"></i>
-                        <span>${contactInfo.email}</span>
+                        <span>${e.email}</span>
                     </a>
-                    <a href="https://wa.me/${contactInfo.whatsapp.replace(
+                    <a href="https://wa.me/${e.whatsapp.replace(
                         /\s+/g,
                         ""
-                    )}?text=Hola%20Melisa,%20me%20interesa%20reservar%20una%20sesión%20de%20descubrimiento%20gratuita" class="contact-option" target="_blank">
+                    )}?text=Hola%20Melisa,%20me%20interesa%20reservar%20una%20sesi\xf3n%20de%20descubrimiento%20gratuita" class="contact-option" target="_blank">
                         <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp: ${
-                            contactInfo.phone || contactInfo.whatsapp
-                        }</span>
+                        <span>WhatsApp: ${e.phone || e.whatsapp}</span>
                     </a>
                 </div>
                 <div class="modal-footer">
-                    <p><small>Te responderé lo antes posible para coordinar tu sesión personalizada</small></p>
+                    <p><small>Te responder\xe9 lo antes posible para coordinar tu sesi\xf3n personalizada</small></p>
                 </div>
             </div>
         </div>
-    `;
-
-    // Add modal styles
-    const modalStyle = document.createElement("style");
-    modalStyle.textContent = `
+    `);
+    let i = document.createElement("style");
+    (i.textContent = `
         .contact-modal {
             position: fixed;
             top: 0;
@@ -889,164 +595,117 @@ function showContactModal() {
         @keyframes slideUp {
             to { transform: translateY(0); }
         }
-    `;
-
-    document.head.appendChild(modalStyle);
-    document.body.appendChild(modal);
-
-    // Close modal functionality
-    const closeModal = () => {
-        modal.style.opacity = "0";
-        setTimeout(() => {
-            document.body.removeChild(modal);
-            document.head.removeChild(modalStyle);
-        }, 300);
+    `),
+        document.head.appendChild(i),
+        document.body.appendChild(n);
+    let a = () => {
+        (n.style.opacity = "0"),
+            setTimeout(() => {
+                document.body.removeChild(n), document.head.removeChild(i);
+            }, 300);
     };
-
-    modal.querySelector(".modal-close").addEventListener("click", closeModal);
-    modal.addEventListener("click", function (e) {
-        if (e.target === modal) closeModal();
-    });
-
-    // Close on escape key
-    document.addEventListener("keydown", function escapeHandler(e) {
-        if (e.key === "Escape") {
-            closeModal();
-            document.removeEventListener("keydown", escapeHandler);
-        }
-    });
+    n.querySelector(".modal-close").addEventListener("click", a),
+        n.addEventListener("click", function (e) {
+            e.target === n && a();
+        }),
+        document.addEventListener("keydown", function e(t) {
+            "Escape" === t.key &&
+                (a(), document.removeEventListener("keydown", e));
+        });
 }
-
-// ===============================================
-// ANIMATIONS & MICRO-INTERACTIONS
-// ===============================================
-
 function initializeAnimations() {
-    // Hover animations for cards
-    const cards = document.querySelectorAll(
+    let e = document.querySelectorAll(
         ".benefit-item, .target-item, .testimonial-card, .info-card, .remedy-card"
     );
-
-    cards.forEach((card) => {
-        card.addEventListener("mouseenter", function () {
-            if (window.innerWidth > 768) {
-                // Only on desktop
-                this.style.transform = "translateY(-8px) scale(1.02)";
-            }
-        });
-
-        card.addEventListener("mouseleave", function () {
-            this.style.transform = "";
-        });
+    e.forEach((e) => {
+        e.addEventListener("mouseenter", function () {
+            window.innerWidth > 768 &&
+                (this.style.transform = "translateY(-8px) scale(1.02)");
+        }),
+            e.addEventListener("mouseleave", function () {
+                this.style.transform = "";
+            });
     });
-
-    // Button ripple effect
-    const buttons = document.querySelectorAll(".cta-button");
-
-    buttons.forEach((button) => {
-        button.addEventListener("click", createRippleEffect);
-    });
-
-    // Typing animation for hero tagline
-    initializeTypingAnimation();
-
-    // Floating animation for floral elements
-    initializeFloatingAnimation();
+    let t = document.querySelectorAll(".cta-button");
+    t.forEach((e) => {
+        e.addEventListener("click", createRippleEffect);
+    }),
+        initializeTypingAnimation(),
+        initializeFloatingAnimation();
 }
-
 function createRippleEffect(e) {
-    const button = e.currentTarget;
-    const ripple = document.createElement("span");
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-
-    ripple.style.cssText = `
+    let t = e.currentTarget,
+        n = document.createElement("span"),
+        i = t.getBoundingClientRect(),
+        a = Math.max(i.width, i.height),
+        o = e.clientX - i.left - a / 2,
+        r = e.clientY - i.top - a / 2;
+    if (
+        ((n.style.cssText = `
         position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
+        width: ${a}px;
+        height: ${a}px;
+        left: ${o}px;
+        top: ${r}px;
         background: rgba(255, 255, 255, 0.3);
         border-radius: 50%;
         transform: scale(0);
         animation: ripple 0.6s ease-out;
         pointer-events: none;
-    `;
-
-    // Add ripple animation if not already present
-    if (!document.querySelector("#ripple-animation")) {
-        const style = document.createElement("style");
-        style.id = "ripple-animation";
-        style.textContent = `
+    `),
+        !document.querySelector("#ripple-animation"))
+    ) {
+        let l = document.createElement("style");
+        (l.id = "ripple-animation"),
+            (l.textContent = `
             @keyframes ripple {
                 to {
                     transform: scale(2);
                     opacity: 0;
                 }
             }
-        `;
-        document.head.appendChild(style);
+        `),
+            document.head.appendChild(l);
     }
-
-    button.style.position = "relative";
-    button.style.overflow = "hidden";
-    button.appendChild(ripple);
-
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
-}
-
-function initializeTypingAnimation() {
-    const tagline = document.querySelector(".hero-tagline");
-    if (!tagline) return;
-
-    const text = tagline.textContent;
-    tagline.textContent = "";
-    tagline.style.borderRight = "2px solid var(--accent-color)";
-
-    let i = 0;
-    const typeWriter = () => {
-        if (i < text.length) {
-            tagline.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
-        } else {
-            // Remove cursor after typing
-            setTimeout(() => {
-                tagline.style.borderRight = "none";
-            }, 1000);
-        }
-    };
-
-    // Start typing animation after a delay
-    setTimeout(typeWriter, 1000);
-}
-
-function initializeFloatingAnimation() {
-    // Create floating floral elements
-    const floralElements = [
-        { icon: "fas fa-leaf", delay: 0 },
-        { icon: "fas fa-seedling", delay: 2000 },
-        { icon: "fas fa-spa", delay: 4000 },
-    ];
-
-    floralElements.forEach((element, index) => {
+    (t.style.position = "relative"),
+        (t.style.overflow = "hidden"),
+        t.appendChild(n),
         setTimeout(() => {
-            createFloatingElement(element.icon);
-        }, element.delay);
+            n.remove();
+        }, 600);
+}
+function initializeTypingAnimation() {
+    let e = document.querySelector(".hero-tagline");
+    if (!e) return;
+    let t = e.textContent;
+    (e.textContent = ""),
+        (e.style.borderRight = "2px solid var(--accent-color)");
+    let n = 0,
+        i = () => {
+            n < t.length
+                ? ((e.textContent += t.charAt(n)), n++, setTimeout(i, 100))
+                : setTimeout(() => {
+                      e.style.borderRight = "none";
+                  }, 1e3);
+        };
+    setTimeout(i, 1e3);
+}
+function initializeFloatingAnimation() {
+    [
+        { icon: "fas fa-leaf", delay: 0 },
+        { icon: "fas fa-seedling", delay: 2e3 },
+        { icon: "fas fa-spa", delay: 4e3 },
+    ].forEach((e, t) => {
+        setTimeout(() => {
+            createFloatingElement(e.icon);
+        }, e.delay);
     });
 }
-
-function createFloatingElement(iconClass) {
-    const element = document.createElement("div");
-    element.className = "floating-element";
-    element.innerHTML = `<i class="${iconClass}"></i>`;
-
-    const style = document.createElement("style");
-    style.textContent = `
+function createFloatingElement(e) {
+    let t = document.createElement("div");
+    (t.className = "floating-element"), (t.innerHTML = `<i class="${e}"></i>`);
+    let n = document.createElement("style");
+    (n.textContent = `
         .floating-element {
             position: fixed;
             color: var(--accent-color);
@@ -1072,178 +731,146 @@ function createFloatingElement(iconClass) {
                 opacity: 0;
             }
         }
-    `;
-
-    if (!document.querySelector("#floating-animation")) {
-        style.id = "floating-animation";
-        document.head.appendChild(style);
-    }
-
-    element.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(element);
-
-    setTimeout(() => {
-        element.remove();
-    }, 20000);
+    `),
+        document.querySelector("#floating-animation") ||
+            ((n.id = "floating-animation"), document.head.appendChild(n)),
+        (t.style.left = 100 * Math.random() + "vw"),
+        document.body.appendChild(t),
+        setTimeout(() => {
+            t.remove();
+        }, 2e4);
 }
-
-// ===============================================
-// PERFORMANCE OPTIMIZATIONS
-// ===============================================
-
 function initializePerformanceOptimizations() {
-    // Lazy loading for images
     if ("IntersectionObserver" in window) {
-        const images = document.querySelectorAll("img[data-src]");
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove("lazy");
-                    observer.unobserve(img);
-                }
+        let e = document.querySelectorAll("img[data-src]"),
+            t = new IntersectionObserver((e, t) => {
+                e.forEach((e) => {
+                    if (e.isIntersecting) {
+                        let n = e.target;
+                        (n.src = n.dataset.src),
+                            n.classList.remove("lazy"),
+                            t.unobserve(n);
+                    }
+                });
             });
-        });
-
-        images.forEach((img) => imageObserver.observe(img));
+        e.forEach((e) => t.observe(e));
     }
-
-    // Preload critical resources
-    preloadCriticalResources();
-
-    // Service Worker registration (for PWA features)
-    registerServiceWorker();
+    preloadCriticalResources(), registerServiceWorker();
 }
-
 function preloadCriticalResources() {
-    const criticalResources = [
-        "css/styles.css",
-        "img/logo.png",
-        "img/producto.png",
-    ];
-
-    criticalResources.forEach((resource) => {
-        const link = document.createElement("link");
-        link.rel = "preload";
-        link.as = resource.endsWith(".css") ? "style" : "image";
-        link.href = resource;
-        document.head.appendChild(link);
+    ["css/styles.css", "img/logo.png", "img/producto.png"].forEach((e) => {
+        let t = document.createElement("link");
+        (t.rel = "preload"),
+            (t.as = e.endsWith(".css") ? "style" : "image"),
+            (t.href = e),
+            document.head.appendChild(t);
     });
 }
-
 function registerServiceWorker() {
-    if ("serviceWorker" in navigator) {
+    "serviceWorker" in navigator &&
         window.addEventListener("load", () => {
             navigator.serviceWorker
                 .register("/sw.js")
-                .then((registration) => {
-                    console.log("SW registered: ", registration);
+                .then((e) => {
+                    console.log("SW registered: ", e);
                 })
-                .catch((registrationError) => {
-                    console.log("SW registration failed: ", registrationError);
+                .catch((e) => {
+                    console.log("SW registration failed: ", e);
                 });
         });
-    }
 }
-
-// ===============================================
-// UTILITY FUNCTIONS
-// ===============================================
-
-// Debounce function for performance optimization
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function executedFunction() {
-        const context = this;
-        const args = arguments;
-        const later = function () {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+function debounce(e, t, n) {
+    let i;
+    return function a() {
+        let o = this,
+            r = arguments,
+            l = function () {
+                (i = null), n || e.apply(o, r);
+            },
+            s = n && !i;
+        clearTimeout(i), (i = setTimeout(l, t)), s && e.apply(o, r);
     };
 }
-
-// Throttle function for scroll events
-function throttle(func, limit) {
-    let inThrottle;
+function throttle(e, t) {
+    let n;
     return function () {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => (inThrottle = false), limit);
-        }
+        let i = arguments;
+        n || (e.apply(this, i), (n = !0), setTimeout(() => (n = !1), t));
     };
 }
-
-// Check if element is in viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
+function isInViewport(e) {
+    let t = e.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <=
+        t.top >= 0 &&
+        t.left >= 0 &&
+        t.bottom <=
             (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <=
-            (window.innerWidth || document.documentElement.clientWidth)
+        t.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
 }
-
-// ===============================================
-// ERROR HANDLING & ANALYTICS
-// ===============================================
-
-// Global error handler
-window.addEventListener("error", function (e) {
-    console.error("JavaScript error:", e.error);
-
-    // Send error to analytics if available
-    if (typeof gtag !== "undefined") {
-        gtag("event", "exception", {
-            description: e.error.message,
-            fatal: false,
-        });
-    }
-});
-
-// Performance monitoring
-window.addEventListener("load", function () {
-    // Measure page load performance
-    if ("performance" in window) {
-        const loadTime =
-            performance.timing.loadEventEnd -
-            performance.timing.navigationStart;
-
-        if (typeof gtag !== "undefined") {
-            gtag("event", "timing_complete", {
-                name: "load",
-                value: loadTime,
-            });
-        }
-
-        console.log(`Page loaded in ${loadTime}ms`);
-    }
-});
-
-// ===============================================
-// ACCESSIBILITY ENHANCEMENTS
-// ===============================================
-
-// Skip to main content link
+function announcePageChange(e) {
+    let t = document.createElement("div");
+    t.setAttribute("aria-live", "polite"),
+        t.setAttribute("aria-atomic", "true"),
+        (t.className = "sr-only"),
+        (t.textContent = e),
+        document.body.appendChild(t),
+        setTimeout(() => {
+            document.body.removeChild(t);
+        }, 1e3);
+}
 document.addEventListener("DOMContentLoaded", function () {
-    const skipLink = document.createElement("a");
-    skipLink.href = "#hero";
-    skipLink.textContent = "Saltar al contenido principal";
-    skipLink.className = "skip-link";
-
-    const skipStyle = document.createElement("style");
-    skipStyle.textContent = `
+    initializePreloader(),
+        initializeBackground(),
+        initializeDynamicYear(),
+        setTimeout(() => {
+            initializeNavigation(),
+                initializeScrollEffects(),
+                initializeAnimations(),
+                initializeSmoothScrolling(),
+                initializeContactForm(),
+                initializePerformanceOptimizations(),
+                "undefined" != typeof AOS &&
+                    AOS.init({
+                        duration: 800,
+                        easing: "ease-in-out",
+                        once: !0,
+                        offset: 100,
+                        disable: function () {
+                            return (
+                                window.innerWidth < 768 &&
+                                navigator.connection &&
+                                "slow-2g" === navigator.connection.effectiveType
+                            );
+                        },
+                    });
+        }, 100);
+}),
+    window.addEventListener("error", function (e) {
+        console.error("JavaScript error:", e.error),
+            "undefined" != typeof gtag &&
+                gtag("event", "exception", {
+                    description: e.error.message,
+                    fatal: !1,
+                });
+    }),
+    window.addEventListener("load", function () {
+        if ("performance" in window) {
+            let e =
+                performance.timing.loadEventEnd -
+                performance.timing.navigationStart;
+            "undefined" != typeof gtag &&
+                gtag("event", "timing_complete", { name: "load", value: e }),
+                console.log(`Page loaded in ${e}ms`);
+        }
+    }),
+    document.addEventListener("DOMContentLoaded", function () {
+        let e = document.createElement("a");
+        (e.href = "#hero"),
+            (e.textContent = "Saltar al contenido principal"),
+            (e.className = "skip-link");
+        let t = document.createElement("style");
+        (t.textContent = `
         .skip-link {
             position: absolute;
             top: -40px;
@@ -1258,47 +885,20 @@ document.addEventListener("DOMContentLoaded", function () {
         .skip-link:focus {
             top: 6px;
         }
-    `;
-
-    document.head.appendChild(skipStyle);
-    document.body.insertBefore(skipLink, document.body.firstChild);
-});
-
-// Keyboard navigation enhancement
-document.addEventListener("keydown", function (e) {
-    // ESC key to close any open modals or menus
-    if (e.key === "Escape") {
-        const activeModal = document.querySelector(".contact-modal");
-        const activeMenu = document.querySelector(".nav-menu.active");
-
-        if (activeModal) {
-            activeModal.querySelector(".modal-close").click();
+    `),
+            document.head.appendChild(t),
+            document.body.insertBefore(e, document.body.firstChild);
+    }),
+    document.addEventListener("keydown", function (e) {
+        if ("Escape" === e.key) {
+            let t = document.querySelector(".contact-modal"),
+                n = document.querySelector(".nav-menu.active");
+            t && t.querySelector(".modal-close").click(),
+                n && document.getElementById("nav-toggle").click();
         }
-
-        if (activeMenu) {
-            document.getElementById("nav-toggle").click();
-        }
-    }
-});
-
-// Announce page changes for screen readers
-function announcePageChange(message) {
-    const announcement = document.createElement("div");
-    announcement.setAttribute("aria-live", "polite");
-    announcement.setAttribute("aria-atomic", "true");
-    announcement.className = "sr-only";
-    announcement.textContent = message;
-
-    document.body.appendChild(announcement);
-
-    setTimeout(() => {
-        document.body.removeChild(announcement);
-    }, 1000);
-}
-
-// Screen reader only class
+    });
 const srOnlyStyle = document.createElement("style");
-srOnlyStyle.textContent = `
+(srOnlyStyle.textContent = `
     .sr-only {
         position: absolute;
         width: 1px;
@@ -1310,5 +910,5 @@ srOnlyStyle.textContent = `
         white-space: nowrap;
         border: 0;
     }
-`;
-document.head.appendChild(srOnlyStyle);
+`),
+    document.head.appendChild(srOnlyStyle);
