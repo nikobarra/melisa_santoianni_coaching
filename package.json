@@ -1,7 +1,7 @@
 {
-    "name": "coaching-floral-web",
+    "name": "melisa-santoianni-coaching",
     "version": "1.0.0",
-    "description": "Web one-page para Coaching Floral de Melisa Santoianni",
+    "description": "Web one-page de coaching ontológico y sistémico de Melisa Santoianni",
     "main": "index.html",
     "scripts": {
         "dev": "live-server --port=3000 --open=index.html",
@@ -11,8 +11,9 @@
         "start": "npm run dev"
     },
     "keywords": [
-        "coaching",
-        "flores-bach",
+        "coaching-ontologico",
+        "coaching-sistemico",
+        "coaching-duelo",
         "bienestar",
         "transformacion-personal"
     ],

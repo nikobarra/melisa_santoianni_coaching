@@ -1,54 +1,20 @@
-# SOLO DESPLEGAR LA CARPETA PUBLIC
-# Ignorar TODO excepto la carpeta public
+# Se despliega directo desde la raíz del repo (sin carpeta public/ duplicada)
+# Solo se ignoran archivos que no son parte del sitio
 
-# Root files
-/*.html
-/*.js
-/*.css
-/*.json
-/*.md
-/*.txt
-/*.png
-/*.jpg
-/*.jpeg
-/*.gif
-/*.svg
-/*.webp
+node_modules
+.git
+.cursor
+.agents
+material
 
-# Root directories
-/css
-/js
-/img
-/structure
-/dist
-/node_modules
-/.git
-/.vscode
-/.idea
-
-# Development files
-package.json
-package-lock.json
-.gitignore
 README.md
-vercel-build.js
-vercel-analytics-config.js
-DYNAMIC_CONTENT.md
-MODAL_CONTACT_UPDATE.md
-DEVELOPMENT_NOTES.md
 
-# OS files
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Logs and cache
 *.log
 .cache
-.parcel-cache
 tmp
 temp
-
-# Environment files
 .env*
 *.local

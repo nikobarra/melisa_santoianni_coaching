@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-23T00:00:00Z",
+  "title": "Design System: Melisa Santoianni - Coaching Ontológico y Sistémico",
+  "extensions": {
+    "colorMeta": {
+      "terracota-cocida": {
+        "role": "primary",
+        "displayName": "Terracota Cocida",
+        "canonical": "#B5582F",
+        "tonalRamp": ["#3D1E10", "#71371D", "#A24F2A", "#CD693D", "#D98E6D", "#E6B49E", "#F0D3C6", "#FAEFEB"]
+      },
+      "salvia-apagada": {
+        "role": "secondary",
+        "displayName": "Salvia Apagada",
+        "canonical": "#64754A",
+        "tonalRamp": ["#282F1E", "#4B5737", "#6B7D4F", "#8AA069", "#A8B88F", "#C5D0B4", "#DDE3D3", "#F3F5EF"]
+      },
+      "arena": {
+        "role": "neutral",
+        "displayName": "Arena",
+        "canonical": "#EFE4D0",
+        "tonalRamp": ["#392C13", "#6B5224", "#987534", "#C19648", "#D0B076", "#E0CBA4", "#EDE0CA", "#F9F4EC"]
+      },
+      "lino": {
+        "role": "neutral",
+        "displayName": "Lino",
+        "canonical": "#FAF5EA",
+        "tonalRamp": ["#3E2F0F", "#73581B", "#A57E27", "#D0A139", "#DCB86B", "#E7D09C", "#F1E4C5", "#FAF5EA"]
+      },
+      "espresso-tibio": {
+        "role": "neutral",
+        "displayName": "Espresso Tibio",
+        "canonical": "#2E2419",
+        "tonalRamp": ["#32271B", "#5D4832", "#846748", "#A98660", "#BEA488", "#D4C3B0", "#E6DCD1", "#F6F2EE"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Nombre 'Melisa Santoianni' en el hero." },
+      "headline": { "displayName": "Headline", "purpose": "Títulos de sección principales." },
+      "body": { "displayName": "Body", "purpose": "Texto de contenido general." }
+    },
+    "shadows": [
+      { "name": "ambient", "value": "0 4px 20px rgba(46, 36, 25, 0.1)", "purpose": "Reposo, en tarjetas y contenedores." },
+      { "name": "hover", "value": "0 8px 30px rgba(46, 36, 25, 0.16)", "purpose": "Estado activo/hover, siempre junto a una elevación." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Transición estándar para todos los estados interactivos (--transition)." }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "1024px" },
+      { "name": "md", "value": "768px" },
+      { "name": "sm", "value": "480px" },
+      { "name": "xs", "value": "360px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "CTA principal del sitio (reservar sesión, navegar a secciones). Píldora con gradiente de acento.",
+      "html": "<button class=\"ds-btn-primary\">Reserva tu sesión gratuita</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 12px; padding: 1rem 2rem; background: linear-gradient(135deg, #B5582F, #64754A); color: #FFFFFF; border: none; border-radius: 50px; font-family: Karla, 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(46,36,25,0.1); cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(46,36,25,0.16); } .ds-btn-primary:focus-visible { outline: 2px solid #B5582F; outline-offset: 2px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Contenedor de contenido (beneficio, testimonio, información). Esquina suave, sombra ambiental que se profundiza al hover.",
+      "html": "<div class=\"ds-card\" tabindex=\"0\"><h3>Coaching Ontológico</h3><p>Reestructuración de creencias limitantes y definición de objetivos.</p></div>",
+      "css": ".ds-card { background: #FFFFFF; border-radius: 12px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(46,36,25,0.1); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-card:hover, .ds-card:focus-visible { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(46,36,25,0.16); } .ds-card:focus-visible { outline: 2px solid #B5582F; outline-offset: 2px; } .ds-card h3 { color: #2E2419; font-family: 'Zilla Slab', Georgia, serif; margin-bottom: 0.75rem; } .ds-card p { color: #6B5D4C; font-family: Karla, sans-serif; line-height: 1.7; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Link de navegación estándar. Píldora que se resalta con el color de acento al hover.",
+      "html": "<a href=\"#\" class=\"ds-nav-link\">Sobre Mí</a>",
+      "css": ".ds-nav-link { padding: 0.5rem 1.25rem; border-radius: 25px; color: #2E2419; font-family: Karla, sans-serif; font-weight: 500; text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-nav-link:hover, .ds-nav-link:focus-visible { background: rgba(181,88,47,0.1); color: #B5582F; } .ds-nav-link:focus-visible { outline: 2px solid #B5582F; outline-offset: 2px; }"
+    },
+    {
+      "name": "Nav Link (CTA)",
+      "kind": "nav",
+      "refersTo": "nav-link-cta",
+      "description": "Variante destacada del link de navegación, usada para la acción principal (Contacto).",
+      "html": "<a href=\"#\" class=\"ds-nav-link-cta\">Contacto</a>",
+      "css": ".ds-nav-link-cta { padding: 0.6rem 1.5rem; border-radius: 25px; background: linear-gradient(135deg, #B5582F, #64754A); color: #FFFFFF; font-family: Karla, sans-serif; font-weight: 600; text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); } .ds-nav-link-cta:hover, .ds-nav-link-cta:focus-visible { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(46,36,25,0.16); } .ds-nav-link-cta:focus-visible { outline: 2px solid #2E2419; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Sendero Compartido",
+    "overview": "El sistema entero parte de una sola imagen: dos trazos que caminan el mismo camino sin fundirse nunca en uno solo. Terracota y salvia no son un acento y un secundario, son dos presencias que aparecen juntas, casi siempre en el mismo gradiente de 135°, porque el acompañamiento es el producto, no un adjetivo del producto.\n\nLa superficie es cálida (arena, lino) y el texto nunca llega a negro puro; hasta la sombra de las tarjetas está tintada de espresso, no de gris neutro. Esa decisión no es decorativa: parte de la audiencia atraviesa un duelo activo, y un sistema visual frío o clínico se siente fuera de lugar en ese momento. Al mismo tiempo, el sistema se aleja deliberadamente del registro anterior (pastel floral, cursiva ornamental) porque ese registro leía como delicado en un momento en que el pedido es sostén, no ornamento.\n\nSe rechaza explícitamente: la paleta pastel/floral y la tipografía cursiva del posicionamiento anterior (Playfair Display, Dancing Script); cualquier ícono o imagen que reduzca la marca a \"flores\"; sombras grises neutras (siempre tintadas del color de texto).",
+    "keyCharacteristics": [
+      "Terracota y salvia aparecen juntos, casi nunca solos, en el gradiente de acento.",
+      "Superficies cálidas, nunca blanco frío ni gris neutro.",
+      "Elevación ambiental, ligera, que responde al hover, no una jerarquía de profundidad fija.",
+      "Formas: botones en píldora (curva completa), tarjetas con esquina suave (12px), nunca esquina viva."
+    ],
+    "rules": [
+      { "name": "La Regla del Dúo", "body": "La terracota no aparece nunca completamente sola en un elemento grande (botón, banda, gradiente); casi siempre comparte el espacio con la salvia en el mismo gradiente de 135°. Un acento solitario contradice la premisa de la marca: nada se hace en soledad.", "section": "colors" },
+      { "name": "La Regla de la Sombra Tibia", "body": "Ninguna sombra usa negro o gris neutro. Toda box-shadow se construye tiñendo el color de texto, nunca rgba(0,0,0,...).", "section": "colors" },
+      { "name": "La Regla de la Cursiva Retirada", "body": "No se usa tipografía script/cursiva en ningún punto del sistema. Es una ruptura deliberada con el posicionamiento anterior (Dancing Script), que leía como delicado/ornamental en vez de sólido.", "section": "typography" },
+      { "name": "La Regla del Levante", "body": "Ningún elemento cambia de sombra sin moverse también. Sombra y transform: translateY(...) van siempre juntas; la sombra sola sin movimiento se siente muerta.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar terracota y salvia juntos en el mismo gradiente de 135° para cualquier elemento de acento grande.",
+      "Do tintar toda sombra con el color de texto, nunca negro o gris puro.",
+      "Do acompañar todo cambio de sombra con una elevación (translateY), nunca solo uno de los dos.",
+      "Do usar píldora completa para lo accionable y esquina de 12px para contenedores de contenido."
+    ],
+    "donts": [
+      "Don't usar tipografía script/cursiva en ningún punto del sistema.",
+      "Don't dejar la terracota sola como fondo grande sin la salvia acompañándola en el gradiente.",
+      "Don't usar esquinas vivas (0px) en botones, tarjetas o cualquier contenedor de contenido.",
+      "Don't introducir gris neutro o negro puro en sombras, bordes o texto."
+    ]
+  }
+}

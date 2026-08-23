@@ -1,20 +1,20 @@
 {
     "colors": {
-        "primary": "#F7F2EB",
-        "secondary": "#EAE0D6",
-        "tertiary": "#C9B29F",
-        "accent": "#F6C8C7",
-        "text_dark": "#3C3A3B",
-        "text_light": "#7E7B7A"
+        "primary": "#EFE4D0",
+        "secondary": "#FAF5EA",
+        "tertiary": "#64754A",
+        "accent": "#B5582F",
+        "text_dark": "#2E2419",
+        "text_light": "#6B5D4C"
     },
     "typography": {
-        "heading_font": "Playfair Display, serif",
-        "body_font": "Lato, sans-serif",
-        "name_font": "Dancing Script, cursive"
+        "heading_font": "Zilla Slab, serif",
+        "body_font": "Karla, sans-serif",
+        "name_font": "Zilla Slab, serif"
     },
     "visual_style": {
-        "background_texture": "Sutil textura de papel o lino",
-        "floral_elements": "Ilustraciones de flores en contornos delicados y tonos pálidos, como en el logo",
-        "iconography": "Íconos minimalistas y de línea fina que representen conceptos como bienestar, equilibrio, y crecimiento personal"
+        "background_texture": "Fondo cálido tipo arena/lino, sin textura decorativa",
+        "logo_concept": "Sendero: un camino recorrido en compañía, dos trazos (terracota + salvia) que nunca se funden en uno",
+        "iconography": "Íconos minimalistas de línea fina, mismo lenguaje de trazo que el logo"
     }
 }

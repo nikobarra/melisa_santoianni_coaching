@@ -16,6 +16,14 @@ VERCEL_DEPLOY_SOLUTION.md
 
 # Contexto de estrategia de marca (no forma parte de la web)
 .agents/
+
+# Herramientas de Claude Code instaladas localmente (no son código del proyecto)
+.claude/skills/
+.claude/settings.local.json
+
+# Carpetas sin identificar aparecidas en sesiones previas, no generadas por este proyecto
+.codex/
+material/
 # Node.js Dependencies
 node_modules/
 npm-debug.log*

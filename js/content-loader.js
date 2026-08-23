@@ -1,330 +1,434 @@
+/**
+ * COACHING FLORAL - DYNAMIC CONTENT LOADER
+ * Sistema de carga dinámica de contenido desde content.json
+ * Auto-actualización cuando el archivo JSON cambia
+ */
+
 class ContentLoader {
     constructor() {
-        (this.contentData = null),
-            (this.lastModified = null),
-            (this.checkInterval = 2e3),
-            (this.isLoading = !1);
+        this.contentData = null;
+        this.lastModified = null;
+        this.checkInterval = 2000; // Verificar cambios cada 2 segundos
+        this.isLoading = false;
     }
+
+    /**
+     * Inicializar el cargador de contenido
+     */
     async init() {
         try {
-            await this.loadContent(),
-                this.renderAllSections(),
-                this.startAutoReload(),
-                console.log("✅ Content Loader inicializado correctamente");
-        } catch (t) {
-            console.error("❌ Error inicializando Content Loader:", t);
+            await this.loadContent();
+            this.renderAllSections();
+            this.startAutoReload();
+            console.log("✅ Content Loader inicializado correctamente");
+        } catch (error) {
+            console.error("❌ Error inicializando Content Loader:", error);
         }
     }
+
+    /**
+     * Cargar contenido desde content.json
+     */
     async loadContent() {
-        if (!this.isLoading) {
-            this.isLoading = !0;
-            try {
-                let t = await fetch("structure/content.json?" + Date.now());
-                if (!t.ok) throw Error(`HTTP error! status: ${t.status}`);
-                let e = t.headers.get("Last-Modified");
-                if (this.lastModified && e === this.lastModified)
-                    return (this.isLoading = !1), !1;
-                return (
-                    (this.contentData = await t.json()),
-                    (this.lastModified = e),
-                    (this.isLoading = !1),
-                    !0
-                );
-            } catch (o) {
-                return (
-                    console.error("Error cargando contenido:", o),
-                    (this.isLoading = !1),
-                    !1
-                );
+        if (this.isLoading) return;
+
+        this.isLoading = true;
+        try {
+            const response = await fetch(
+                "structure/content.json?" + Date.now()
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+
+            const lastModified = response.headers.get("Last-Modified");
+
+            // Solo actualizar si el archivo ha cambiado
+            if (this.lastModified && lastModified === this.lastModified) {
+                this.isLoading = false;
+                return false;
+            }
+
+            this.contentData = await response.json();
+            this.lastModified = lastModified;
+            this.isLoading = false;
+            return true;
+        } catch (error) {
+            console.error("Error cargando contenido:", error);
+            this.isLoading = false;
+            return false;
         }
     }
+
+    /**
+     * Renderizar todas las secciones
+     */
     renderAllSections() {
         if (!this.contentData || !this.contentData.sections) {
             console.warn("No hay datos de contenido para renderizar");
             return;
         }
-        this.contentData.sections.forEach((t) => {
-            switch (t.id) {
+
+        this.contentData.sections.forEach((section) => {
+            switch (section.id) {
                 case "hero":
-                    this.renderHeroSection(t);
-                    break;
-                case "historia-flores-bach":
-                    this.renderHistoriaSection(t);
+                    this.renderHeroSection(section);
                     break;
                 case "about-me":
-                    this.renderAboutMeSection(t);
+                    this.renderAboutMeSection(section);
                     break;
                 case "coaching-ontologico":
-                    this.renderCoachingSection(t);
+                    this.renderCoachingSection(section);
                     break;
-                case "que-es":
-                    this.renderQueEsSection(t);
-                    break;
-                case "flores-para-mascotas":
-                    this.renderMascotasSection(t);
+                case "flores-complemento":
+                    this.renderFloresComplementoSection(section);
                     break;
                 case "para-quien-es":
-                    this.renderParaQuienSection(t);
+                    this.renderParaQuienSection(section);
                     break;
                 case "proceso":
-                    this.renderProcesoSection(t);
+                    this.renderProcesoSection(section);
                     break;
                 case "testimonios":
-                    this.renderTestimoniosSection(t);
+                    this.renderTestimoniosSection(section);
                     break;
                 case "contacto":
-                    this.renderContactoSection(t);
+                    this.renderContactoSection(section);
+                    break;
             }
-        }),
-            "undefined" != typeof AOS && AOS.refresh(),
-            this.updateContactModal();
-    }
-    renderHeroSection(t) {
-        let e = t.content,
-            o = document.querySelector(".hero-name"),
-            n = document.querySelector(".hero-title"),
-            i = document.querySelector(".hero-tagline"),
-            r = document.querySelector(".hero-description"),
-            a = document.querySelector(".hero .cta-button");
-        if (
-            (o && (o.textContent = e.heading || ""),
-            n && (n.textContent = e.subheading || ""),
-            i && (i.textContent = e.tagline || ""),
-            r && (r.textContent = e.description || ""),
-            a && e.cta_button)
-        ) {
-            a.href = e.cta_button.link || "#";
-            let c = a.querySelector(":not(i)");
-            c &&
-                (a.innerHTML = `<i class="fas fa-leaf" aria-hidden="true"></i> ${e.cta_button.text}`);
+        });
+
+        // Reinicializar AOS después de renderizar
+        if (typeof AOS !== "undefined") {
+            AOS.refresh();
         }
     }
-    renderHistoriaSection(t) {
-        let e = t.content,
-            o = document.getElementById("historia-flores-bach");
-        if (!o) return;
-        let n = o.querySelector("h2");
-        n && (n.textContent = e.heading || "");
-        let i = o.querySelector(".content-text p:first-child");
-        i && (i.textContent = e.description || "");
-        let r = o.querySelector(".highlight-box p");
-        r && (r.textContent = e.discovery || "");
-        let a = o.querySelector(".info-card p");
-        a && (a.textContent = e.system_principles || "");
-    }
-    renderAboutMeSection(t) {
-        let e = t.content,
-            o = document.getElementById("about-me");
-        if (!o) return;
-        let n = o.querySelector("h2");
-        if ((n && (n.textContent = e.heading || ""), e.photo)) {
-            let i = o.querySelector(".melisa-photo"),
-                r = o.querySelector(".photo-caption h4"),
-                a = o.querySelector(".photo-caption p");
-            i && ((i.src = e.photo.src || ""), (i.alt = e.photo.alt || "")),
-                r && (r.textContent = e.photo.caption_name || ""),
-                a && (a.textContent = e.photo.caption_title || "");
+
+    /**
+     * Renderizar sección Hero
+     */
+    renderHeroSection(section) {
+        const content = section.content;
+
+        // Actualizar contenido del hero
+        const heroName = document.querySelector(".hero-name");
+        const heroTitle = document.querySelector(".hero-title");
+        const heroTagline = document.querySelector(".hero-tagline");
+        const heroDescription = document.querySelector(".hero-description");
+        const heroButton = document.querySelector(".hero .cta-button");
+
+        if (heroName) heroName.textContent = content.heading || "";
+        if (heroTitle) heroTitle.textContent = content.subheading || "";
+        if (heroTagline) heroTagline.textContent = content.tagline || "";
+        if (heroDescription)
+            heroDescription.textContent = content.description || "";
+
+        if (heroButton && content.cta_button) {
+            heroButton.href = content.cta_button.link || "#";
+            const buttonText = heroButton.querySelector(":not(i)");
+            if (buttonText) {
+                heroButton.innerHTML = `<i class="fas fa-leaf" aria-hidden="true"></i> ${content.cta_button.text}`;
+            }
         }
-        if (e.story) {
-            let c = e.story.split("\n\n"),
-                s = o.querySelector(".about-story");
-            s &&
-                ((s.innerHTML = ""),
-                c.forEach((t, e) => {
-                    let o = document.createElement("p");
-                    (o.className =
-                        e === c.length - 1
+    }
+
+    /**
+     * Renderizar sección About Me
+     */
+    renderAboutMeSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("about-me");
+
+        if (!sectionEl) return;
+
+        // Actualizar título
+        const heading = sectionEl.querySelector("h2");
+        if (heading) heading.textContent = content.heading || "";
+
+        // Actualizar foto
+        if (content.photo) {
+            const photoImg = sectionEl.querySelector(".melisa-photo");
+            const captionName = sectionEl.querySelector(".photo-caption h3");
+            const captionTitle = sectionEl.querySelector(".photo-caption p");
+
+            if (photoImg) {
+                photoImg.src = content.photo.src || "";
+                photoImg.alt = content.photo.alt || "";
+            }
+
+            if (captionName) {
+                captionName.textContent = content.photo.caption_name || "";
+            }
+
+            if (captionTitle) {
+                captionTitle.textContent = content.photo.caption_title || "";
+            }
+        }
+
+        // Actualizar historia
+        if (content.story) {
+            const storyParagraphs = content.story.split("\n\n");
+            const storyContainer = sectionEl.querySelector(".about-story");
+
+            if (storyContainer) {
+                // Limpiar contenido existente
+                storyContainer.innerHTML = "";
+
+                // Agregar párrafos
+                storyParagraphs.forEach((paragraph, index) => {
+                    const p = document.createElement("p");
+                    p.className =
+                        index === storyParagraphs.length - 1
                             ? "story-text highlight"
-                            : "story-text"),
-                        (o.textContent = t),
-                        s.appendChild(o);
-                }));
-        }
-        if (e.highlights) {
-            let l = o.querySelector(".about-highlights");
-            l &&
-                ((l.innerHTML = ""),
-                e.highlights.forEach((t, e) => {
-                    let o = document.createElement("div");
-                    (o.className = "highlight-item"),
-                        o.setAttribute("data-aos", "fade-up"),
-                        o.setAttribute("data-aos-delay", (e + 1) * 100),
-                        (o.innerHTML = `
-                        <div class="highlight-icon">
-                            <i class="${t.icon}"></i>
-                        </div>
-                        <h3>${t.title}</h3>
-                        <p>${t.description}</p>
-                    `),
-                        l.appendChild(o);
-                }));
-        }
-    }
-    renderCoachingSection(t) {
-        let e = t.content,
-            o = document.getElementById("coaching-ontologico");
-        if (!o) return;
-        let n = o.querySelector("h3");
-        n && (n.textContent = e.heading || "");
-        let i = o.querySelector(".content-text p");
-        i && (i.textContent = e.description || "");
-    }
-    renderQueEsSection(t) {
-        let e = t.content,
-            o = document.getElementById("que-es");
-        if (!o) return;
-        let n = o.querySelector(".fusion-intro .lead");
-        n && (n.textContent = e.introduction || "");
-        let i = o.querySelector(".fusion-card:last-child p");
-        i && (i.textContent = e.synergy_description || "");
-        let r = o.querySelector(".result-card p");
-        r && (r.textContent = e.benefits || "");
-    }
-    renderMascotasSection(t) {
-        let e = t.content,
-            o = document.getElementById("flores-para-mascotas");
-        if (!o) return;
-        let n = o.querySelector(".pets-intro p");
-        if (
-            (n && (n.textContent = e.introduction || ""),
-            e.key_behaviors && e.key_behaviors.list_items)
-        ) {
-            let i = o.querySelector(".behaviors-list");
-            i &&
-                (i.innerHTML = e.key_behaviors.list_items
-                    .map(
-                        (t) =>
-                            `<li><i class="fas fa-check-circle"></i> ${t}</li>`
-                    )
-                    .join(""));
-        }
-        if (e.rescue_remedy) {
-            let r = o.querySelector(".remedy-card p");
-            if (
-                (r && (r.textContent = e.rescue_remedy.description || ""),
-                e.rescue_remedy.components)
-            ) {
-                let a = o.querySelectorAll(".component span");
-                e.rescue_remedy.components.forEach((t, e) => {
-                    a[e] && (a[e].textContent = t);
+                            : "story-text";
+                    p.textContent = paragraph;
+                    storyContainer.appendChild(p);
                 });
             }
         }
-        let c = o.querySelector(".disclaimer-box p");
-        c &&
-            (c.innerHTML = `<strong>Importante:</strong> ${
-                e.disclaimer || ""
-            }`);
-    }
-    renderParaQuienSection(t) {
-        let e = t.content,
-            o = document.getElementById("para-quien-es");
-        if (!o) return;
-        let n = o.querySelector(".target-intro .lead");
-        if ((n && (n.textContent = e.introduction || ""), e.list_items)) {
-            let i = o.querySelectorAll(".target-item p");
-            e.list_items.forEach((t, e) => {
-                i[e] && (i[e].textContent = t);
-            });
+
+        // Actualizar highlights
+        if (content.highlights) {
+            const highlightsContainer =
+                sectionEl.querySelector(".about-highlights");
+            if (highlightsContainer) {
+                highlightsContainer.innerHTML = "";
+
+                content.highlights.forEach((highlight, index) => {
+                    const highlightEl = document.createElement("div");
+                    highlightEl.className = "highlight-item";
+                    highlightEl.setAttribute("data-aos", "fade-up");
+                    highlightEl.setAttribute(
+                        "data-aos-delay",
+                        (index + 1) * 100
+                    );
+
+                    highlightEl.innerHTML = `
+                        <div class="highlight-icon">
+                            <i class="${highlight.icon}"></i>
+                        </div>
+                        <h3>${highlight.title}</h3>
+                        <p>${highlight.description}</p>
+                    `;
+
+                    highlightsContainer.appendChild(highlightEl);
+                });
+            }
         }
     }
-    renderProcesoSection(t) {
-        let e = t.content,
-            o = document.getElementById("proceso");
-        if (!o) return;
-        let n = o.querySelector(".section-subtitle");
-        if ((n && (n.textContent = e.introduction || ""), e.steps)) {
-            let i = o.querySelectorAll(".timeline-item");
-            e.steps.forEach((t, e) => {
-                if (i[e]) {
-                    let o = i[e].querySelector("h3"),
-                        n = i[e].querySelector("p");
-                    o && (o.textContent = t.heading || ""),
-                        n && (n.textContent = t.description || "");
+
+    /**
+     * Renderizar sección Coaching Ontológico
+     */
+    renderCoachingSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("coaching-ontologico");
+
+        if (!sectionEl) return;
+
+        // Actualizar subtítulo
+        const subtitle = sectionEl.querySelector("h3");
+        if (subtitle) subtitle.textContent = content.heading || "";
+
+        // Actualizar descripción
+        const description = sectionEl.querySelector(".content-text p");
+        if (description) description.textContent = content.description || "";
+    }
+
+    /**
+     * Renderizar sección Flores de Bach (complemento)
+     */
+    renderFloresComplementoSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("flores-complemento");
+
+        if (!sectionEl) return;
+
+        const description = sectionEl.querySelector(".complement-content .lead");
+        if (description) description.textContent = content.description || "";
+
+        const mascotasNote = sectionEl.querySelector(".complement-note");
+        if (mascotasNote && content.mascotas_note) {
+            mascotasNote.innerHTML = `<i class="fas fa-paw" aria-hidden="true"></i> ${content.mascotas_note}`;
+        }
+    }
+
+    /**
+     * Renderizar sección Para Quién Es
+     */
+    renderParaQuienSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("para-quien-es");
+
+        if (!sectionEl) return;
+
+        // Actualizar introducción
+        const intro = sectionEl.querySelector(".target-intro .lead");
+        if (intro) intro.textContent = content.introduction || "";
+
+        // Actualizar lista de items (los títulos de las tarjetas se mantienen, solo descripción)
+        if (content.list_items) {
+            const targetItems = sectionEl.querySelectorAll(".target-item p");
+            content.list_items.forEach((item, index) => {
+                if (targetItems[index]) {
+                    targetItems[index].textContent = item;
                 }
             });
         }
     }
-    renderTestimoniosSection(t) {
-        let e = t.content,
-            o = document.getElementById("testimonios");
-        if (!o) return;
-        let n = o.querySelector(".section-subtitle");
-        if ((n && (n.textContent = e.introduction || ""), e.testimonials)) {
-            let i = o.querySelectorAll(".testimonial-card");
-            e.testimonials.forEach((t, e) => {
-                if (i[e]) {
-                    let o = i[e].querySelector("blockquote"),
-                        n = i[e].querySelector("cite");
-                    o && (o.textContent = t.quote || ""),
-                        n && (n.textContent = `— ${t.author || ""}`);
+
+    /**
+     * Renderizar sección Proceso
+     */
+    renderProcesoSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("proceso");
+
+        if (!sectionEl) return;
+
+        // Actualizar introducción
+        const subtitle = sectionEl.querySelector(".section-subtitle");
+        if (subtitle) subtitle.textContent = content.introduction || "";
+
+        // Actualizar pasos del proceso
+        if (content.steps) {
+            const timelineItems = sectionEl.querySelectorAll(".timeline-item");
+            content.steps.forEach((step, index) => {
+                if (timelineItems[index]) {
+                    const heading = timelineItems[index].querySelector("h3");
+                    const description = timelineItems[index].querySelector("p");
+
+                    if (heading) heading.textContent = step.heading || "";
+                    if (description)
+                        description.textContent = step.description || "";
                 }
             });
         }
     }
-    renderContactoSection(t) {
-        let e = t.content,
-            o = document.getElementById("contacto");
-        if (!o) return;
-        let n = o.querySelector("h2"),
-            i = o.querySelector(".section-subtitle");
-        if (
-            (n && (n.textContent = e.heading || ""),
-            i && (i.textContent = e.description || ""),
-            e.contact_info)
-        ) {
-            let r = o.querySelector("#contact-email"),
-                a = o.querySelector("#contact-whatsapp");
-            r &&
-                e.contact_info.email &&
-                ((r.href = `mailto:${e.contact_info.email}`),
-                (r.textContent = e.contact_info.email)),
-                a &&
-                    e.contact_info.whatsapp &&
-                    ((a.href = `https://wa.me/${e.contact_info.whatsapp.replace(
-                        /\s+/g,
-                        ""
-                    )}`),
-                    (a.textContent =
-                        e.contact_info.phone || e.contact_info.whatsapp));
+
+    /**
+     * Renderizar sección Testimonios
+     */
+    renderTestimoniosSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("testimonios");
+
+        if (!sectionEl) return;
+
+        // Actualizar subtítulo
+        const subtitle = sectionEl.querySelector(".section-subtitle");
+        if (subtitle) subtitle.textContent = content.introduction || "";
+
+        // Actualizar testimonios
+        if (content.testimonials) {
+            const testimonialCards =
+                sectionEl.querySelectorAll(".testimonial-card");
+            content.testimonials.forEach((testimonial, index) => {
+                if (testimonialCards[index]) {
+                    const quote =
+                        testimonialCards[index].querySelector("blockquote");
+                    const author =
+                        testimonialCards[index].querySelector("cite");
+
+                    if (quote) quote.textContent = testimonial.quote || "";
+                    if (author)
+                        author.textContent = `— ${testimonial.author || ""}`;
+                }
+            });
         }
-        if (e.cta_button) {
-            let c = o.querySelector("#contact-button");
-            c &&
-                ((c.href = e.cta_button.link || "#"),
-                (c.innerHTML = `<i class="fas fa-calendar-alt"></i> ${
-                    e.cta_button.text || ""
-                }`));
+    }
+
+    /**
+     * Renderizar sección Contacto
+     */
+    renderContactoSection(section) {
+        const content = section.content;
+        const sectionEl = document.getElementById("contacto");
+
+        if (!sectionEl) return;
+
+        // Actualizar título y descripción
+        const heading = sectionEl.querySelector("h2");
+        const description = sectionEl.querySelector(".section-subtitle");
+
+        if (heading) heading.textContent = content.heading || "";
+        if (description) description.textContent = content.description || "";
+
+        // Actualizar información de contacto
+        if (content.contact_info) {
+            const emailLink = sectionEl.querySelector("#contact-email");
+            const whatsappLink = sectionEl.querySelector("#contact-whatsapp");
+
+            if (emailLink && content.contact_info.email) {
+                emailLink.href = `mailto:${content.contact_info.email}`;
+                emailLink.textContent = content.contact_info.email;
+            }
+
+            if (whatsappLink && content.contact_info.whatsapp) {
+                whatsappLink.href = `https://wa.me/${content.contact_info.whatsapp.replace(
+                    /\s+/g,
+                    ""
+                )}`;
+                whatsappLink.textContent =
+                    content.contact_info.phone || content.contact_info.whatsapp;
+            }
         }
-        e.social_media &&
-            e.social_media.forEach((t) => {
-                let e = o.querySelector(
-                    `.social-link.${t.platform.toLowerCase()}`
+
+        // Actualizar botón CTA
+        if (content.cta_button) {
+            const ctaButton = sectionEl.querySelector("#contact-button");
+            if (ctaButton) {
+                ctaButton.href = content.cta_button.link || "#";
+                ctaButton.innerHTML = `<i class="fab fa-whatsapp"></i> ${
+                    content.cta_button.text || ""
+                }`;
+            }
+        }
+
+        // Actualizar enlaces de redes sociales
+        if (content.social_media) {
+            content.social_media.forEach((social) => {
+                const socialLink = sectionEl.querySelector(
+                    `.social-link.${social.platform.toLowerCase()}`
                 );
-                e && (e.href = t.url || "#");
+                if (socialLink) {
+                    socialLink.href = social.url || "#";
+                }
             });
+        }
     }
+
+    /**
+     * Iniciar sistema de auto-recarga
+     */
     startAutoReload() {
         setInterval(async () => {
-            let t = await this.loadContent();
-            t &&
-                (console.log(
-                    "\uD83D\uDD04 Contenido actualizado, re-renderizando..."
-                ),
-                this.renderAllSections(),
-                this.showUpdateNotification());
+            const hasChanged = await this.loadContent();
+            if (hasChanged) {
+                console.log("🔄 Contenido actualizado, re-renderizando...");
+                this.renderAllSections();
+
+                // Mostrar notificación visual
+                this.showUpdateNotification();
+            }
         }, this.checkInterval);
     }
+
+    /**
+     * Mostrar notificación de actualización
+     */
     showUpdateNotification() {
-        let t = document.createElement("div");
-        if (
-            ((t.className = "update-notification"),
-            (t.innerHTML = `
+        // Crear notificación temporal
+        const notification = document.createElement("div");
+        notification.className = "update-notification";
+        notification.innerHTML = `
             <i class="fas fa-sync-alt"></i>
             <span>Contenido actualizado</span>
-        `),
-            (t.style.cssText = `
+        `;
+
+        // Estilos inline para la notificación
+        notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
@@ -332,7 +436,7 @@ class ContentLoader {
             color: var(--text-dark);
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(46, 36, 25, 0.15);
             z-index: 10000;
             display: flex;
             align-items: center;
@@ -342,12 +446,13 @@ class ContentLoader {
             font-weight: 500;
             animation: slideInRight 0.3s ease-out;
             transition: all 0.3s ease;
-        `),
-            !document.querySelector("#update-notification-styles"))
-        ) {
-            let e = document.createElement("style");
-            (e.id = "update-notification-styles"),
-                (e.textContent = `
+        `;
+
+        // Agregar animación CSS
+        if (!document.querySelector("#update-notification-styles")) {
+            const style = document.createElement("style");
+            style.id = "update-notification-styles";
+            style.textContent = `
                 @keyframes slideInRight {
                     from {
                         transform: translateX(100%);
@@ -368,38 +473,27 @@ class ContentLoader {
                         opacity: 0;
                     }
                 }
-            `),
-                document.head.appendChild(e);
+            `;
+            document.head.appendChild(style);
         }
-        document.body.appendChild(t),
+
+        document.body.appendChild(notification);
+
+        // Remover después de 3 segundos
+        setTimeout(() => {
+            notification.style.animation = "slideOutRight 0.3s ease-in";
             setTimeout(() => {
-                (t.style.animation = "slideOutRight 0.3s ease-in"),
-                    setTimeout(() => {
-                        t.parentNode && t.parentNode.removeChild(t);
-                    }, 300);
-            }, 3e3);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
     }
-    updateContactModal() {
-        let t = document.querySelector(".contact-modal");
-        if (!t) return;
-        let e = this.contentData.sections.find((t) => "contacto" === t.id);
-        if (!e || !e.content.contact_info) return;
-        let o = e.content.contact_info,
-            n = t.querySelector('.contact-option[href^="mailto:"]'),
-            i = t.querySelector('.contact-option[href^="https://wa.me/"]');
-        n &&
-            ((n.href = `mailto:${o.email}`),
-            (n.querySelector("span").textContent = o.email)),
-            i &&
-                ((i.href = `https://wa.me/${o.whatsapp.replace(
-                    /\s+/g,
-                    ""
-                )}?text=Hola%20Melisa,%20me%20interesa%20reservar%20una%20sesi\xf3n%20de%20descubrimiento%20gratuita`),
-                (i.querySelector("span").textContent = `WhatsApp: ${
-                    o.phone || o.whatsapp
-                }`));
-    }
+
 }
+
+// Inicializar cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
-    (window.contentLoader = new ContentLoader()), window.contentLoader.init();
+    window.contentLoader = new ContentLoader();
+    window.contentLoader.init();
 });
