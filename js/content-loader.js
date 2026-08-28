@@ -90,9 +90,6 @@ class ContentLoader {
                 case "proceso":
                     this.renderProcesoSection(section);
                     break;
-                case "testimonios":
-                    this.renderTestimoniosSection(section);
-                    break;
                 case "contacto":
                     this.renderContactoSection(section);
                     break;
@@ -131,6 +128,15 @@ class ContentLoader {
                 heroButton.innerHTML = `<i class="fas fa-leaf" aria-hidden="true"></i> ${content.cta_button.text}`;
             }
         }
+
+        // Let main.js know the real tagline text has landed, so its
+        // typewriter effect never races against this render and
+        // truncates/duplicates the text mid-animation.
+        document.dispatchEvent(
+            new CustomEvent("hero-content-ready", {
+                detail: { tagline: content.tagline || "" },
+            })
+        );
     }
 
     /**
@@ -145,26 +151,6 @@ class ContentLoader {
         // Actualizar título
         const heading = sectionEl.querySelector("h2");
         if (heading) heading.textContent = content.heading || "";
-
-        // Actualizar foto
-        if (content.photo) {
-            const photoImg = sectionEl.querySelector(".melisa-photo");
-            const captionName = sectionEl.querySelector(".photo-caption h3");
-            const captionTitle = sectionEl.querySelector(".photo-caption p");
-
-            if (photoImg) {
-                photoImg.src = content.photo.src || "";
-                photoImg.alt = content.photo.alt || "";
-            }
-
-            if (captionName) {
-                captionName.textContent = content.photo.caption_name || "";
-            }
-
-            if (captionTitle) {
-                captionTitle.textContent = content.photo.caption_title || "";
-            }
-        }
 
         // Actualizar historia
         if (content.story) {
@@ -302,38 +288,6 @@ class ContentLoader {
                     if (heading) heading.textContent = step.heading || "";
                     if (description)
                         description.textContent = step.description || "";
-                }
-            });
-        }
-    }
-
-    /**
-     * Renderizar sección Testimonios
-     */
-    renderTestimoniosSection(section) {
-        const content = section.content;
-        const sectionEl = document.getElementById("testimonios");
-
-        if (!sectionEl) return;
-
-        // Actualizar subtítulo
-        const subtitle = sectionEl.querySelector(".section-subtitle");
-        if (subtitle) subtitle.textContent = content.introduction || "";
-
-        // Actualizar testimonios
-        if (content.testimonials) {
-            const testimonialCards =
-                sectionEl.querySelectorAll(".testimonial-card");
-            content.testimonials.forEach((testimonial, index) => {
-                if (testimonialCards[index]) {
-                    const quote =
-                        testimonialCards[index].querySelector("blockquote");
-                    const author =
-                        testimonialCards[index].querySelector("cite");
-
-                    if (quote) quote.textContent = testimonial.quote || "";
-                    if (author)
-                        author.textContent = `— ${testimonial.author || ""}`;
                 }
             });
         }
