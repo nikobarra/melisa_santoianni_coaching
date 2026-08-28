@@ -438,8 +438,7 @@ p {
     line-height: 1;
 }
 .contact-info h3,
-.footer-logo,
-.photo-caption h3 {
+.footer-logo {
     font-family: var(--heading-font);
 }
 .hero-title {
@@ -1032,74 +1031,21 @@ p {
 }
 .about-content {
     display: grid;
-    grid-template-columns: 300px 1fr 350px;
+    grid-template-columns: 1fr 350px;
     gap: 3rem;
     align-items: flex-start;
     margin-top: 3rem;
 }
-.about-photo {
-    grid-column: 1;
-}
 .about-story {
-    grid-column: 2;
-}
-.photo-container {
-    position: relative;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: 0 8px 25px var(--shadow);
-    transition: var(--transition);
-}
-.photo-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px var(--shadow-hover);
-}
-.melisa-photo {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    object-position: center;
-    transition: var(--transition);
-}
-.photo-container:hover .melisa-photo {
-    transform: scale(1.05);
-}
-.photo-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(
-        transparent,
-        rgba(0, 0, 0, 0.7),
-        rgba(0, 0, 0, 0.9)
-    );
-    color: var(--white);
-    padding: 2rem 1.5rem 1.5rem;
-    transform: translateY(100%);
-    transition: var(--transition);
+    grid-column: 1;
 }
 .highlight-item,
 .story-text.highlight {
     padding: 1.5rem;
     border-radius: var(--border-radius);
 }
-.photo-container:hover .photo-overlay {
-    transform: translateY(0);
-}
-.photo-caption h3 {
-    font-size: 1.3rem;
-    margin: 0 0 0.5rem;
-    color: var(--white);
-}
-.photo-caption p {
-    font-size: 0.95rem;
-    margin: 0;
-    opacity: 0.9;
-    font-style: italic;
-}
 .about-highlights {
-    grid-column: 3;
+    grid-column: 2;
     flex: 1;
     display: grid;
     gap: 2rem;
@@ -1204,7 +1150,6 @@ p {
         box-sizing: border-box !important;
     }
     .about-highlights,
-    .about-photo,
     .about-story {
         grid-column: 1;
     }
@@ -1252,10 +1197,6 @@ p {
     .main-section-subtitle {
         font-size: 1.1rem;
     }
-    .about-photo {
-        justify-self: center;
-        max-width: 280px;
-    }
     .nav-container,
     .navbar {
         max-width: 100vw !important;
@@ -1265,9 +1206,6 @@ p {
     }
     .about-story {
         margin-bottom: 2rem;
-    }
-    .melisa-photo {
-        height: 350px;
     }
     body::before {
         background-attachment: scroll;

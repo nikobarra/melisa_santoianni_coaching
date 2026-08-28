@@ -603,9 +603,7 @@ function initializeContactForm() {
 
 function initializeAnimations() {
     // Hover animations for cards
-    const cards = document.querySelectorAll(
-        ".benefit-item, .target-item, .testimonial-card"
-    );
+    const cards = document.querySelectorAll(".benefit-item, .target-item");
 
     cards.forEach((card) => {
         card.addEventListener("mouseenter", function () {
@@ -683,26 +681,55 @@ function initializeTypingAnimation() {
     const tagline = document.querySelector(".hero-tagline");
     if (!tagline) return;
 
-    const text = tagline.textContent;
-    tagline.textContent = "";
-    tagline.style.borderRight = "2px solid var(--accent-color)";
+    const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    let i = 0;
-    const typeWriter = () => {
-        if (i < text.length) {
-            tagline.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
-        } else {
-            // Remove cursor after typing
-            setTimeout(() => {
-                tagline.style.borderRight = "none";
-            }, 1000);
+    let hasTyped = false;
+
+    const runTypewriter = (text) => {
+        if (hasTyped || !text) return;
+        hasTyped = true;
+
+        if (prefersReducedMotion) {
+            tagline.textContent = text;
+            return;
         }
+
+        tagline.textContent = "";
+        tagline.style.borderRight = "2px solid var(--accent-color)";
+
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                tagline.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            } else {
+                // Remove cursor after typing
+                setTimeout(() => {
+                    tagline.style.borderRight = "none";
+                }, 1000);
+            }
+        };
+
+        setTimeout(typeWriter, 1000);
     };
 
-    // Start typing animation after a delay
-    setTimeout(typeWriter, 1000);
+    // Preferred path: wait for content-loader.js to confirm the real
+    // tagline text so the typewriter never races against content.json
+    // overwriting .hero-tagline mid-animation (which used to be able to
+    // truncate or duplicate the text on slow connections).
+    document.addEventListener(
+        "hero-content-ready",
+        (event) => runTypewriter(event.detail && event.detail.tagline),
+        { once: true }
+    );
+
+    // Fallback in case content-loader.js never fires the event (e.g. the
+    // fetch to content.json failed) — type out whatever is already in the
+    // static HTML.
+    setTimeout(() => runTypewriter(tagline.textContent), 3000);
 }
 
 function initializeFloatingAnimation() {

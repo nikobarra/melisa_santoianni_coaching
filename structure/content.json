@@ -7,9 +7,9 @@
                 "heading": "Melisa Santoianni",
                 "subheading": "COACHING ONTOLÓGICO Y SISTÉMICO",
                 "tagline": "Tu camino hacia el bienestar emocional",
-                "description": "Coaching ontológico y sistémico para tu transformación personal, tus vínculos y tu duelo. Las Flores de Bach son un complemento, no el centro.",
+                "description": "Coaching ontológico y sistémico para tu transformación personal, tus vínculos y tu duelo. Las Flores de Bach son un complemento, no el centro. Trabajo de forma 100% virtual, así que no importa en qué ciudad estés: te acompaño por videollamada desde cualquier punto de Argentina o del mundo hispanohablante.",
                 "cta_button": {
-                    "text": "Descubre tu camino",
+                    "text": "Descubrí tu camino",
                     "link": "#coaching-ontologico"
                 }
             }
@@ -19,12 +19,6 @@
             "title": "Sobre Mí",
             "content": {
                 "heading": "Mi Historia Personal",
-                "photo": {
-                    "src": "img/melisa_santoianni.webp",
-                    "alt": "Melisa Santoianni - Coach Ontológica y Sistémica",
-                    "caption_name": "Melisa Santoianni",
-                    "caption_title": "Coach Ontológica y Sistémica"
-                },
                 "story": "Mi vida siempre ha sido una búsqueda de bienestar, no solo para mí, sino para quienes me rodean. Nací en la bulliciosa Buenos Aires, en una familia de gente trabajadora que me enseñó el valor del esfuerzo. Con el tiempo, sentí el llamado de una vida más tranquila, que me llevó a Balcarce, una ciudad que se convirtió en el lienzo de mi primer gran emprendimiento: la decoración de tortas. Fue un éxito, sí, pero la vida, como siempre, tenía otros planes.\n\nLa pandemia nos obligó a todos a parar, a reinventarnos. Fue ahí, en el silencio de esos días, donde descubrí un camino que resonaba con lo más profundo de mi ser: el poder de lo natural y las terapias alternativas. Así, me convertí en terapeuta floral y en aromaterapeuta, y la gratitud de mis primeros pacientes me confirmó que estaba en el lugar correcto. Ver el alivio en sus rostros y recibir sus recomendaciones me impulsó a seguir.\n\nSin embargo, algo me decía que podía ir más allá. Sabía que las personas necesitaban más que una solución, necesitaban herramientas. Fue el coaching ontológico el que me dio la respuesta. Al integrar estas herramientas con mis conocimientos en terapias florales, descubrí que las dos cosas juntas funcionaban mejor que por separado: no solo podía ofrecer un preparado específico, sino también guiar a las personas a encontrar ese bienestar que anhelan, de forma duradera.\n\nHoy te acompaño en ese mismo camino. No porque lo leí en un libro, sino porque lo viví.",
                 "highlights": [
                     {
@@ -54,9 +48,9 @@
             "id": "coaching-ontologico",
             "title": "¿Qué es el Coaching Ontológico?",
             "content": {
-                "heading": "Transforma tu Ser",
-                "description": "El coaching ontológico parte de una idea simple: puedes cambiar cómo piensas y actúas, incluso cuando sientes que ya eres así. No es psicología ni trata trastornos. Te ayuda a elegir, con libertad, quién quieres ser.",
-                "benefits": "Sirve para mejorar cómo te relacionas con otros, ganar seguridad en el trabajo y avanzar en lo que te propongas. En el fondo, se trata de definir quién quieres ser."
+                "heading": "Transformá tu Ser",
+                "description": "El coaching ontológico parte de una idea simple: podés cambiar cómo pensás y actuás, incluso cuando sentís que ya sos así. No es psicología ni trata trastornos. Te ayuda a elegir, con libertad, quién querés ser.",
+                "benefits": "Sirve para mejorar cómo te relacionás con otros, ganar seguridad en el trabajo y avanzar en lo que te propongas. En el fondo, se trata de definir quién querés ser."
             }
         },
         {
@@ -70,15 +64,15 @@
         },
         {
             "id": "para-quien-es",
-            "title": "Esto es para ti si...",
+            "title": "Esto es para vos si...",
             "content": {
-                "introduction": "Te sientes estancado, agobiado, o no sabes cómo manejar lo que te pasa. Buscas algo que dure, no un parche.",
+                "introduction": "Te sentís estancado/a, agobiado/a, o no sabés cómo manejar lo que te pasa. Buscás algo que dure, no un parche.",
                 "list_items": [
-                    "Buscas mayor autoconciencia y conexión con tu esencia.",
-                    "Quieres superar creencias que te limitan.",
-                    "Te sientes abrumado por la ansiedad, el estrés o la tristeza.",
+                    "Buscás mayor autoconciencia y conexión con tu esencia.",
+                    "Querés superar creencias que te limitan.",
+                    "Te sentís abrumado/a por la ansiedad, el estrés o la tristeza.",
                     "Estás atravesando una pérdida y necesitás acompañamiento para transitarla.",
-                    "Anhelas encontrar tu propósito y vivir una vida más plena."
+                    "Anhelás encontrar tu propósito y vivir una vida más plena."
                 ]
             }
         },
@@ -86,11 +80,11 @@
             "id": "proceso",
             "title": "El Proceso",
             "content": {
-                "introduction": "Un proceso guiado, paso a paso. Te acompaño hasta que llegues a donde quieres llegar.",
+                "introduction": "Un proceso guiado, paso a paso. Te acompaño hasta que llegues a donde querés llegar.",
                 "steps": [
                     {
                         "heading": "Sesión de Descubrimiento Gratuita",
-                        "description": "Un primer encuentro sin compromiso para que me cuentes tus desafíos y veamos juntos si esto es lo que necesitás."
+                        "description": "Un primer encuentro sin compromiso, por videollamada, para que me cuentes tus desafíos y veamos juntos si esto es lo que necesitás."
                     },
                     {
                         "heading": "Sesiones de Coaching Ontológico",
@@ -108,23 +102,6 @@
             }
         },
         {
-            "id": "testimonios",
-            "title": "Voces que inspiran",
-            "content": {
-                "introduction": "Historias reales de personas que ya hicieron este camino.",
-                "testimonials": [
-                    {
-                        "quote": "Melisa me ayudó a encontrar la paz que tanto buscaba. Pasé de sentirme abrumada a tener una claridad mental increíble. ¡Recomendadísima!",
-                        "author": "Laura G."
-                    },
-                    {
-                        "quote": "Las Flores de Bach, combinadas con las sesiones de coaching, fueron la clave para superar mis miedos y creencias limitantes. Ahora me siento más segura y conectada conmigo misma.",
-                        "author": "Ana P."
-                    }
-                ]
-            }
-        },
-        {
             "id": "contacto",
             "title": "Comienza tu viaje",
             "content": {
@@ -136,7 +113,7 @@
                     "phone": "+54 2266 440618"
                 },
                 "cta_button": {
-                    "text": "Reserva tu sesión gratuita",
+                    "text": "Reservá tu sesión gratuita",
                     "link": "https://wa.me/542266440618?text=Hola%20Melisa,%20me%20interesa%20reservar%20una%20sesión%20de%20descubrimiento%20gratuita"
                 },
                 "social_media": [
